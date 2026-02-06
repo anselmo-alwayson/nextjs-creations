@@ -7,6 +7,8 @@ export interface Produto {
 export interface ProdutoMetricas {
   nps_score: number;
   csat_score: number;
+  csat_mes_anterior: number;
+  ces_score: number;
   tempo_medio_resposta: string;
   tempo_mes_anterior: string;
   total_clientes: number;
@@ -14,6 +16,15 @@ export interface ProdutoMetricas {
   neutros: { percentual: number; quantidade: number };
   detratores: { percentual: number; quantidade: number };
   evolucao_mensal: { mes: string; csat: number; nps: number }[];
+  tempo_resposta_mensal: { mes: string; tempo: number }[];
+  satisfacao_breakdown: {
+    categoria: string;
+    muitoSatisfeito: number;
+    satisfeito: number;
+    neutro: number;
+    insatisfeito: number;
+    muitoInsatisfeito: number;
+  }[];
 }
 
 export const produtos: Produto[] = [
@@ -29,10 +40,32 @@ export const produtos: Produto[] = [
   { id: 10, nome: "Claro Combo", categoria: "Combo" },
 ];
 
+function generateBreakdown(): ProdutoMetricas["satisfacao_breakdown"] {
+  return [
+    { categoria: "Atendimento", muitoSatisfeito: 30, satisfeito: 25, neutro: 20, insatisfeito: 15, muitoInsatisfeito: 10 },
+    { categoria: "Cobertura", muitoSatisfeito: 35, satisfeito: 28, neutro: 18, insatisfeito: 12, muitoInsatisfeito: 7 },
+    { categoria: "Preço", muitoSatisfeito: 20, satisfeito: 22, neutro: 25, insatisfeito: 20, muitoInsatisfeito: 13 },
+    { categoria: "Qualidade", muitoSatisfeito: 32, satisfeito: 30, neutro: 18, insatisfeito: 12, muitoInsatisfeito: 8 },
+  ];
+}
+
+function generateTempoMensal(base: number): ProdutoMetricas["tempo_resposta_mensal"] {
+  return [
+    { mes: "Set", tempo: base + 4 },
+    { mes: "Out", tempo: base + 3 },
+    { mes: "Nov", tempo: base + 2 },
+    { mes: "Dez", tempo: base + 1 },
+    { mes: "Jan", tempo: base + 0.5 },
+    { mes: "Fev", tempo: base },
+  ];
+}
+
 const metricasPorProduto: Record<number, ProdutoMetricas> = {
   1: {
     nps_score: 32,
     csat_score: 58,
+    csat_mes_anterior: 55,
+    ces_score: 45.2,
     tempo_medio_resposta: "14:30",
     tempo_mes_anterior: "16:05",
     total_clientes: 4200,
@@ -47,10 +80,14 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
       { mes: "Jan", csat: 57, nps: 31 },
       { mes: "Fev", csat: 58, nps: 32 },
     ],
+    tempo_resposta_mensal: generateTempoMensal(14.5),
+    satisfacao_breakdown: generateBreakdown(),
   },
   2: {
     nps_score: 45,
     csat_score: 65,
+    csat_mes_anterior: 62,
+    ces_score: 58.7,
     tempo_medio_resposta: "11:20",
     tempo_mes_anterior: "12:45",
     total_clientes: 8500,
@@ -65,10 +102,14 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
       { mes: "Jan", csat: 64, nps: 44 },
       { mes: "Fev", csat: 65, nps: 45 },
     ],
+    tempo_resposta_mensal: generateTempoMensal(11.3),
+    satisfacao_breakdown: generateBreakdown(),
   },
   3: {
     nps_score: 62,
     csat_score: 73,
+    csat_mes_anterior: 70,
+    ces_score: 75.9,
     tempo_medio_resposta: "8:45",
     tempo_mes_anterior: "10:12",
     total_clientes: 15200,
@@ -83,10 +124,14 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
       { mes: "Jan", csat: 72, nps: 61 },
       { mes: "Fev", csat: 73, nps: 62 },
     ],
+    tempo_resposta_mensal: generateTempoMensal(8.75),
+    satisfacao_breakdown: generateBreakdown(),
   },
   4: {
     nps_score: 71,
     csat_score: 80,
+    csat_mes_anterior: 78,
+    ces_score: 82.1,
     tempo_medio_resposta: "6:10",
     tempo_mes_anterior: "7:30",
     total_clientes: 12000,
@@ -101,10 +146,14 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
       { mes: "Jan", csat: 79, nps: 70 },
       { mes: "Fev", csat: 80, nps: 71 },
     ],
+    tempo_resposta_mensal: generateTempoMensal(6.2),
+    satisfacao_breakdown: generateBreakdown(),
   },
   5: {
     nps_score: 38,
     csat_score: 55,
+    csat_mes_anterior: 52,
+    ces_score: 42.3,
     tempo_medio_resposta: "18:00",
     tempo_mes_anterior: "20:15",
     total_clientes: 3800,
@@ -119,10 +168,14 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
       { mes: "Jan", csat: 54, nps: 37 },
       { mes: "Fev", csat: 55, nps: 38 },
     ],
+    tempo_resposta_mensal: generateTempoMensal(18),
+    satisfacao_breakdown: generateBreakdown(),
   },
   6: {
     nps_score: 55,
     csat_score: 68,
+    csat_mes_anterior: 65,
+    ces_score: 64.8,
     tempo_medio_resposta: "10:30",
     tempo_mes_anterior: "11:50",
     total_clientes: 9200,
@@ -137,10 +190,14 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
       { mes: "Jan", csat: 67, nps: 54 },
       { mes: "Fev", csat: 68, nps: 55 },
     ],
+    tempo_resposta_mensal: generateTempoMensal(10.5),
+    satisfacao_breakdown: generateBreakdown(),
   },
   7: {
     nps_score: 68,
     csat_score: 78,
+    csat_mes_anterior: 75,
+    ces_score: 78.4,
     tempo_medio_resposta: "7:20",
     tempo_mes_anterior: "8:40",
     total_clientes: 11500,
@@ -155,10 +212,14 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
       { mes: "Jan", csat: 77, nps: 67 },
       { mes: "Fev", csat: 78, nps: 68 },
     ],
+    tempo_resposta_mensal: generateTempoMensal(7.3),
+    satisfacao_breakdown: generateBreakdown(),
   },
   8: {
     nps_score: 50,
     csat_score: 64,
+    csat_mes_anterior: 61,
+    ces_score: 60.2,
     tempo_medio_resposta: "12:00",
     tempo_mes_anterior: "13:25",
     total_clientes: 7800,
@@ -173,10 +234,14 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
       { mes: "Jan", csat: 63, nps: 49 },
       { mes: "Fev", csat: 64, nps: 50 },
     ],
+    tempo_resposta_mensal: generateTempoMensal(12),
+    satisfacao_breakdown: generateBreakdown(),
   },
   9: {
     nps_score: 42,
     csat_score: 60,
+    csat_mes_anterior: 57,
+    ces_score: 52.6,
     tempo_medio_resposta: "15:10",
     tempo_mes_anterior: "17:00",
     total_clientes: 5500,
@@ -191,10 +256,14 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
       { mes: "Jan", csat: 59, nps: 41 },
       { mes: "Fev", csat: 60, nps: 42 },
     ],
+    tempo_resposta_mensal: generateTempoMensal(15.2),
+    satisfacao_breakdown: generateBreakdown(),
   },
   10: {
     nps_score: 74,
     csat_score: 82,
+    csat_mes_anterior: 80,
+    ces_score: 85.3,
     tempo_medio_resposta: "5:45",
     tempo_mes_anterior: "6:50",
     total_clientes: 6200,
@@ -209,6 +278,8 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
       { mes: "Jan", csat: 81, nps: 73 },
       { mes: "Fev", csat: 82, nps: 74 },
     ],
+    tempo_resposta_mensal: generateTempoMensal(5.75),
+    satisfacao_breakdown: generateBreakdown(),
   },
 };
 
