@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { MapContainer, TileLayer, CircleMarker, Tooltip, useMap } from "react-leaflet";
+import { useState, useMemo, useEffect } from "react";
+import { MapContainer, TileLayer, CircleMarker, Tooltip, GeoJSON, useMap } from "react-leaflet";
 import type { RegionalData } from "@/data/mockData";
 import { getCategoriaColor } from "@/data/mockData";
 import { MapPin } from "lucide-react";
@@ -41,6 +41,46 @@ function MapController({ selectedCidade, regioes }: { selectedCidade: string | n
   return null;
 }
 
+const BRAZIL_BOUNDS: [[number, number], [number, number]] = [
+  [5.3, -73.9],
+  [-33.8, -34.8],
+];
+
+/** Simple GeoJSON outline of Brazil (approximate) */
+function BrazilHighlight() {
+  const [geoData, setGeoData] = useState<any>(null);
+
+  useEffect(() => {
+    // Fetch Brazil boundary from a public GeoJSON source
+    fetch("https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson")
+      .then((res) => res.json())
+      .then((data) => {
+        const brazil = data.features.find(
+          (f: any) => f.properties.ADMIN === "Brazil" || f.properties.ISO_A3 === "BRA"
+        );
+        if (brazil) setGeoData(brazil);
+      })
+      .catch(() => {
+        // Silently fail - map still works without the highlight
+      });
+  }, []);
+
+  if (!geoData) return null;
+
+  return (
+    <GeoJSON
+      data={geoData}
+      style={{
+        color: "#E30613",
+        weight: 2,
+        fillColor: "#E30613",
+        fillOpacity: 0.05,
+        dashArray: "4 2",
+      }}
+    />
+  );
+}
+
 const MapaBrasil = ({ regioes, selectedCidade, onSelectCidade }: MapaBrasilProps) => {
   const [hoveredCity, setHoveredCity] = useState<string | null>(null);
 
@@ -65,12 +105,15 @@ const MapaBrasil = ({ regioes, selectedCidade, onSelectCidade }: MapaBrasilProps
             className="h-full w-full z-0"
             scrollWheelZoom
             zoomControl
-            style={{ background: "#1a1a2e" }}
+            maxBounds={BRAZIL_BOUNDS}
+            minZoom={3}
+            style={{ background: "#f8f9fa" }}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
             />
+            <BrazilHighlight />
             <MapController selectedCidade={selectedCidade} regioes={regioes} />
 
             {regioes.map((regiao) => {
@@ -85,7 +128,7 @@ const MapaBrasil = ({ regioes, selectedCidade, onSelectCidade }: MapaBrasilProps
                   center={[regiao.lat, regiao.lng]}
                   radius={radius}
                   pathOptions={{
-                    color: isSelected ? "#fff" : color,
+                    color: isSelected ? "#333" : color,
                     fillColor: color,
                     fillOpacity: isSelected ? 0.9 : 0.7,
                     weight: isSelected ? 3 : 1.5,
