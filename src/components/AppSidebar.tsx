@@ -1,4 +1,4 @@
-import { BarChart3, Tags, Users } from "lucide-react";
+import { BarChart3, Tags, Users, Package } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import {
@@ -19,6 +19,7 @@ const menuItems = [
   { title: "Cockpit", url: "/", icon: BarChart3 },
   { title: "Categorias", url: "/categorias", icon: Tags },
   { title: "Clientes", url: "/clientes", icon: Users },
+  { title: "Produtos", url: "/produtos", icon: Package },
 ];
 
 export function AppSidebar() {
