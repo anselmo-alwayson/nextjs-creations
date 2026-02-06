@@ -1,5 +1,6 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MessageCircle, BarChart3 } from "lucide-react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 interface HeaderProps {
   periodo: string;
@@ -17,6 +18,7 @@ const Header = ({ periodo, setPeriodo, regiao, setRegiao, produto, setProduto, o
       <div className="mx-auto flex max-w-[1440px] flex-col gap-3 md:flex-row md:items-center md:justify-between">
         {/* Logo */}
         <div className="flex items-center gap-3">
+          <SidebarTrigger className="text-primary-foreground hover:bg-primary-foreground/20 h-9 w-9" />
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-foreground/20">
             <BarChart3 className="h-5 w-5 text-primary-foreground" />
           </div>
