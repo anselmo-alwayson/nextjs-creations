@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from "react";
 import { MapContainer, TileLayer, CircleMarker, Tooltip, GeoJSON, useMap } from "react-leaflet";
 import type { RegionalData } from "@/data/mockData";
 import { getCategoriaColor } from "@/data/mockData";
-import { MapPin } from "lucide-react";
+import { MapPin, Globe } from "lucide-react";
 import "leaflet/dist/leaflet.css";
 
 interface MapaBrasilProps {
@@ -156,6 +156,17 @@ const MapaBrasil = ({ regioes, selectedCidade, onSelectCidade }: MapaBrasilProps
         <div className="border-t lg:border-t-0 lg:border-l border-border p-3 overflow-y-auto max-h-[400px] md:max-h-[480px]">
           <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Regiões</p>
           <div className="flex flex-row flex-wrap gap-1 lg:flex-col lg:flex-nowrap">
+            <button
+              onClick={() => onSelectCidade(null, null)}
+              className={`flex items-center gap-1.5 rounded-md px-2 py-1.5 text-left text-[11px] transition-colors w-full ${
+                !selectedCidade
+                  ? "bg-accent font-semibold text-accent-foreground"
+                  : "hover:bg-secondary"
+              }`}
+            >
+              <Globe className="h-3 w-3 flex-shrink-0 text-primary" />
+              <span className="truncate">Brasil</span>
+            </button>
             {regioes.map((r) => {
               const color = cssVarToHex(getCategoriaColor(r.categoria_cor));
               return (
