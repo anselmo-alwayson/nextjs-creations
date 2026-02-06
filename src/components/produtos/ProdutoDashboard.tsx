@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Clock, TrendingDown, TrendingUp, SmilePlus, Meh, Frown } from "lucide-react";
 import {
   AreaChart,
@@ -127,6 +128,34 @@ function DonutGauge({
           <p className="text-sm font-bold text-foreground">{unsatPct.toFixed(0)}%</p>
           <p className="text-[9px] text-muted-foreground">Insatisfeitos</p>
         </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── NPS Donut (for Comparativo section) ── */
+function NpsDonut({ score, color }: { score: number; color: string }) {
+  const circumference = 2 * Math.PI * 40;
+  // Map NPS score (-100 to 100) to 0-100% for the donut
+  const pct = ((score + 100) / 200) * 100;
+  const filled = (pct / 100) * circumference;
+
+  return (
+    <div className="relative w-[120px] h-[120px]">
+      <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
+        <circle cx="50" cy="50" r="40" fill="none" stroke="hsl(var(--muted))" strokeWidth="10" />
+        <circle
+          cx="50" cy="50" r="40"
+          fill="none"
+          stroke={color}
+          strokeWidth="10"
+          strokeDasharray={`${filled} ${circumference}`}
+          strokeLinecap="round"
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-2xl font-bold text-foreground">{score}</span>
+        <span className="text-[9px] text-muted-foreground">NPS</span>
       </div>
     </div>
   );
@@ -369,6 +398,150 @@ export function ProdutoDashboard({ metricas, produtoNome }: ProdutoDashboardProp
             </ResponsiveContainer>
           </CardContent>
         </Card>
+      </div>
+
+      {/* ═══ ROW 4: Comparativo Respondido vs Calculado ═══ */}
+      <div>
+        <h2 className="text-sm font-bold text-foreground mb-3">Comparativo: Respondido vs Calculado</h2>
+        <div className="grid grid-cols-3 gap-3">
+          {/* NPS Respondido */}
+          <Card>
+            <CardHeader className="pb-1 pt-4">
+              <CardTitle className="text-[12px] font-semibold text-foreground text-center">
+                NPS Respondido
+              </CardTitle>
+              <p className="text-[10px] text-muted-foreground text-center">
+                {metricas.comparativo.nps_respondido.total_clientes.toLocaleString()} clientes
+              </p>
+            </CardHeader>
+            <CardContent className="flex flex-col items-center pb-4">
+              <NpsDonut
+                score={metricas.comparativo.nps_respondido.score}
+                color="hsl(var(--nps-promoter))"
+              />
+              <div className="mt-3 space-y-1 w-full px-4">
+                <div className="flex items-center gap-2 text-[10px]">
+                  <span className="w-2 h-2 rounded-full shrink-0" style={{ background: "hsl(var(--nps-promoter))" }} />
+                  <span className="text-muted-foreground">Promotores</span>
+                  <span className="ml-auto font-semibold text-foreground">
+                    {metricas.comparativo.nps_respondido.promotores.percentual.toFixed(2)}% ({metricas.comparativo.nps_respondido.promotores.quantidade.toLocaleString()})
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-[10px]">
+                  <span className="w-2 h-2 rounded-full shrink-0" style={{ background: "hsl(var(--nps-neutral))" }} />
+                  <span className="text-muted-foreground">Neutros</span>
+                  <span className="ml-auto font-semibold text-foreground">
+                    {metricas.comparativo.nps_respondido.neutros.percentual.toFixed(2)}% ({metricas.comparativo.nps_respondido.neutros.quantidade.toLocaleString()})
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-[10px]">
+                  <span className="w-2 h-2 rounded-full shrink-0" style={{ background: "hsl(var(--nps-detractor))" }} />
+                  <span className="text-muted-foreground">Detratores</span>
+                  <span className="ml-auto font-semibold text-foreground">
+                    {metricas.comparativo.nps_respondido.detratores.percentual.toFixed(2)}% ({metricas.comparativo.nps_respondido.detratores.quantidade.toLocaleString()})
+                  </span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* NPS Calculado (IA) */}
+          <Card>
+            <CardHeader className="pb-1 pt-4">
+              <CardTitle className="text-[12px] font-semibold text-foreground text-center flex items-center justify-center gap-2">
+                NPS Calculado (IA)
+                <Badge variant="destructive" className="text-[8px] px-1.5 py-0 h-4 uppercase tracking-wider">
+                  Calculado
+                </Badge>
+              </CardTitle>
+              <p className="text-[10px] text-muted-foreground text-center">
+                {metricas.comparativo.nps_calculado.total_clientes.toLocaleString()} clientes
+              </p>
+            </CardHeader>
+            <CardContent className="flex flex-col items-center pb-4">
+              <NpsDonut
+                score={metricas.comparativo.nps_calculado.score}
+                color="hsl(var(--nps-promoter))"
+              />
+              <div className="mt-3 space-y-1 w-full px-4">
+                <div className="flex items-center gap-2 text-[10px]">
+                  <span className="w-2 h-2 rounded-full shrink-0" style={{ background: "hsl(var(--nps-promoter))" }} />
+                  <span className="text-muted-foreground">Promotores</span>
+                  <span className="ml-auto font-semibold text-foreground">
+                    {metricas.comparativo.nps_calculado.promotores.percentual.toFixed(2)}% ({metricas.comparativo.nps_calculado.promotores.quantidade.toLocaleString()})
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-[10px]">
+                  <span className="w-2 h-2 rounded-full shrink-0" style={{ background: "hsl(var(--nps-neutral))" }} />
+                  <span className="text-muted-foreground">Neutros</span>
+                  <span className="ml-auto font-semibold text-foreground">
+                    {metricas.comparativo.nps_calculado.neutros.percentual.toFixed(2)}% ({metricas.comparativo.nps_calculado.neutros.quantidade.toLocaleString()})
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-[10px]">
+                  <span className="w-2 h-2 rounded-full shrink-0" style={{ background: "hsl(var(--nps-detractor))" }} />
+                  <span className="text-muted-foreground">Detratores</span>
+                  <span className="ml-auto font-semibold text-foreground">
+                    {metricas.comparativo.nps_calculado.detratores.percentual.toFixed(2)}% ({metricas.comparativo.nps_calculado.detratores.quantidade.toLocaleString()})
+                  </span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Evolução do NPS - Últimos 6 meses */}
+          <Card>
+            <CardHeader className="pb-2 pt-4">
+              <CardTitle className="text-[12px] font-semibold text-foreground">
+                Evolução do NPS — Últimos 6 meses
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={220}>
+                <LineChart data={metricas.comparativo.evolucao_nps} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis dataKey="mes" tick={{ fontSize: 10 }} stroke="hsl(var(--muted-foreground))" />
+                  <YAxis tick={{ fontSize: 10 }} stroke="hsl(var(--muted-foreground))" domain={["dataMin - 5", "dataMax + 5"]} />
+                  <Tooltip
+                    contentStyle={{
+                      background: "hsl(var(--card))",
+                      border: "1px solid hsl(var(--border))",
+                      borderRadius: 8,
+                      fontSize: 11,
+                    }}
+                    formatter={(value: number, name: string) => [
+                      value,
+                      name === "respondido" ? "NPS Respondido" : "NPS Calculado (IA)",
+                    ]}
+                  />
+                  <Legend
+                    formatter={(value: string) =>
+                      value === "respondido" ? "NPS Respondido" : "NPS Calculado (IA)"
+                    }
+                    wrapperStyle={{ fontSize: 10 }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="respondido"
+                    stroke="var(--chart-line-responded)"
+                    strokeWidth={2.5}
+                    dot={{ r: 4, fill: "var(--chart-line-responded)" }}
+                    activeDot={{ r: 6 }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="calculado"
+                    stroke="var(--chart-line-calculated)"
+                    strokeWidth={2.5}
+                    strokeDasharray="6 3"
+                    dot={{ r: 4, fill: "var(--chart-line-calculated)" }}
+                    activeDot={{ r: 6 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );

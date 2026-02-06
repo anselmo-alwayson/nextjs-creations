@@ -4,6 +4,29 @@ export interface Produto {
   categoria: string;
 }
 
+export interface NpsDistribuicao {
+  percentual: number;
+  quantidade: number;
+}
+
+export interface ComparativoNps {
+  nps_respondido: {
+    score: number;
+    total_clientes: number;
+    promotores: NpsDistribuicao;
+    neutros: NpsDistribuicao;
+    detratores: NpsDistribuicao;
+  };
+  nps_calculado: {
+    score: number;
+    total_clientes: number;
+    promotores: NpsDistribuicao;
+    neutros: NpsDistribuicao;
+    detratores: NpsDistribuicao;
+  };
+  evolucao_nps: { mes: string; respondido: number; calculado: number }[];
+}
+
 export interface ProdutoMetricas {
   nps_score: number;
   csat_score: number;
@@ -25,6 +48,7 @@ export interface ProdutoMetricas {
     insatisfeito: number;
     muitoInsatisfeito: number;
   }[];
+  comparativo: ComparativoNps;
 }
 
 export const produtos: Produto[] = [
@@ -60,6 +84,47 @@ function generateTempoMensal(base: number): ProdutoMetricas["tempo_resposta_mens
   ];
 }
 
+function generateComparativo(
+  npsScore: number,
+  totalRespondido: number,
+  totalCalculado: number,
+  promPct: number,
+  neuPct: number,
+  detPct: number,
+): ComparativoNps {
+  const promQtdR = Math.round(totalRespondido * promPct / 100);
+  const neuQtdR = Math.round(totalRespondido * neuPct / 100);
+  const detQtdR = totalRespondido - promQtdR - neuQtdR;
+  const promQtdC = Math.round(totalCalculado * promPct / 100);
+  const neuQtdC = Math.round(totalCalculado * neuPct / 100);
+  const detQtdC = totalCalculado - promQtdC - neuQtdC;
+
+  return {
+    nps_respondido: {
+      score: npsScore,
+      total_clientes: totalRespondido,
+      promotores: { percentual: promPct, quantidade: promQtdR },
+      neutros: { percentual: neuPct, quantidade: neuQtdR },
+      detratores: { percentual: detPct, quantidade: detQtdR },
+    },
+    nps_calculado: {
+      score: npsScore,
+      total_clientes: totalCalculado,
+      promotores: { percentual: promPct, quantidade: promQtdC },
+      neutros: { percentual: neuPct, quantidade: neuQtdC },
+      detratores: { percentual: detPct, quantidade: detQtdC },
+    },
+    evolucao_nps: [
+      { mes: "Jan", respondido: npsScore - 5, calculado: npsScore - 4 },
+      { mes: "Fev", respondido: npsScore - 3, calculado: npsScore - 3 },
+      { mes: "Mar", respondido: npsScore - 2, calculado: npsScore - 1 },
+      { mes: "Abr", respondido: npsScore - 1, calculado: npsScore },
+      { mes: "Mai", respondido: npsScore + 1, calculado: npsScore + 1 },
+      { mes: "Jun", respondido: npsScore + 2, calculado: npsScore + 2 },
+    ],
+  };
+}
+
 const metricasPorProduto: Record<number, ProdutoMetricas> = {
   1: {
     nps_score: 32,
@@ -82,6 +147,7 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
     ],
     tempo_resposta_mensal: generateTempoMensal(14.5),
     satisfacao_breakdown: generateBreakdown(),
+    comparativo: generateComparativo(32, 5000, 85000, 42.5, 25.3, 32.2),
   },
   2: {
     nps_score: 45,
@@ -104,6 +170,7 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
     ],
     tempo_resposta_mensal: generateTempoMensal(11.3),
     satisfacao_breakdown: generateBreakdown(),
+    comparativo: generateComparativo(45, 6200, 72000, 55.0, 22.0, 23.0),
   },
   3: {
     nps_score: 62,
@@ -126,6 +193,7 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
     ],
     tempo_resposta_mensal: generateTempoMensal(8.75),
     satisfacao_breakdown: generateBreakdown(),
+    comparativo: generateComparativo(62, 8400, 95000, 67.8, 20.4, 11.8),
   },
   4: {
     nps_score: 71,
@@ -148,6 +216,7 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
     ],
     tempo_resposta_mensal: generateTempoMensal(6.2),
     satisfacao_breakdown: generateBreakdown(),
+    comparativo: generateComparativo(71, 7500, 88000, 76.2, 15.5, 8.3),
   },
   5: {
     nps_score: 38,
@@ -170,6 +239,7 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
     ],
     tempo_resposta_mensal: generateTempoMensal(18),
     satisfacao_breakdown: generateBreakdown(),
+    comparativo: generateComparativo(38, 3200, 62000, 45.0, 24.0, 31.0),
   },
   6: {
     nps_score: 55,
@@ -192,6 +262,7 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
     ],
     tempo_resposta_mensal: generateTempoMensal(10.5),
     satisfacao_breakdown: generateBreakdown(),
+    comparativo: generateComparativo(55, 5800, 78000, 60.5, 21.0, 18.5),
   },
   7: {
     nps_score: 68,
@@ -214,6 +285,7 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
     ],
     tempo_resposta_mensal: generateTempoMensal(7.3),
     satisfacao_breakdown: generateBreakdown(),
+    comparativo: generateComparativo(68, 7200, 92000, 72.0, 17.5, 10.5),
   },
   8: {
     nps_score: 50,
@@ -236,6 +308,7 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
     ],
     tempo_resposta_mensal: generateTempoMensal(12),
     satisfacao_breakdown: generateBreakdown(),
+    comparativo: generateComparativo(50, 4800, 68000, 58.0, 22.5, 19.5),
   },
   9: {
     nps_score: 42,
@@ -258,6 +331,7 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
     ],
     tempo_resposta_mensal: generateTempoMensal(15.2),
     satisfacao_breakdown: generateBreakdown(),
+    comparativo: generateComparativo(42, 4200, 71000, 50.0, 24.0, 26.0),
   },
   10: {
     nps_score: 74,
@@ -280,6 +354,7 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
     ],
     tempo_resposta_mensal: generateTempoMensal(5.75),
     satisfacao_breakdown: generateBreakdown(),
+    comparativo: generateComparativo(74, 4000, 55000, 78.5, 14.0, 7.5),
   },
 };
 
