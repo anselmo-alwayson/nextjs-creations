@@ -1,18 +1,29 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MessageCircle, BarChart3 } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { useFilters } from "@/contexts/FilterContext";
+
+const estados = [
+  { value: "todos", label: "Todos os Estados" },
+  { value: "AM", label: "Amazonas" },
+  { value: "BA", label: "Bahia" },
+  { value: "CE", label: "Ceará" },
+  { value: "DF", label: "Distrito Federal" },
+  { value: "MG", label: "Minas Gerais" },
+  { value: "PE", label: "Pernambuco" },
+  { value: "PR", label: "Paraná" },
+  { value: "RJ", label: "Rio de Janeiro" },
+  { value: "RS", label: "Rio Grande do Sul" },
+  { value: "SP", label: "São Paulo" },
+];
 
 interface HeaderProps {
-  periodo: string;
-  setPeriodo: (v: string) => void;
-  regiao: string;
-  setRegiao: (v: string) => void;
-  produto: string;
-  setProduto: (v: string) => void;
-  onOpenChat: () => void;
+  onOpenChat?: () => void;
 }
 
-const Header = ({ periodo, setPeriodo, regiao, setRegiao, produto, setProduto, onOpenChat }: HeaderProps) => {
+const Header = ({ onOpenChat }: HeaderProps) => {
+  const { periodo, setPeriodo, regiao, setRegiao, estado, setEstado, produto, setProduto } = useFilters();
+
   return (
     <header className="nps-gradient-header px-4 py-3 md:px-6 md:py-4">
       <div className="mx-auto flex max-w-[1440px] flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -60,6 +71,19 @@ const Header = ({ periodo, setPeriodo, regiao, setRegiao, produto, setProduto, o
             </SelectContent>
           </Select>
 
+          <Select value={estado} onValueChange={setEstado}>
+            <SelectTrigger className="h-8 w-[130px] border-primary-foreground/30 bg-primary-foreground/10 text-xs text-primary-foreground">
+              <SelectValue placeholder="Estado" />
+            </SelectTrigger>
+            <SelectContent>
+              {estados.map((e) => (
+                <SelectItem key={e.value} value={e.value}>
+                  {e.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
           <Select value={produto} onValueChange={setProduto}>
             <SelectTrigger className="h-8 w-[130px] border-primary-foreground/30 bg-primary-foreground/10 text-xs text-primary-foreground">
               <SelectValue placeholder="Produto" />
@@ -73,13 +97,15 @@ const Header = ({ periodo, setPeriodo, regiao, setRegiao, produto, setProduto, o
             </SelectContent>
           </Select>
 
-          <button
-            onClick={onOpenChat}
-            className="flex h-8 items-center gap-1.5 rounded-md border border-primary-foreground/30 bg-primary-foreground/10 px-3 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary-foreground/20"
-          >
-            <MessageCircle className="h-3.5 w-3.5" />
-            Chat Maestro
-          </button>
+          {onOpenChat && (
+            <button
+              onClick={onOpenChat}
+              className="flex h-8 items-center gap-1.5 rounded-md border border-primary-foreground/30 bg-primary-foreground/10 px-3 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary-foreground/20"
+            >
+              <MessageCircle className="h-3.5 w-3.5" />
+              Chat Maestro
+            </button>
+          )}
         </div>
       </div>
     </header>

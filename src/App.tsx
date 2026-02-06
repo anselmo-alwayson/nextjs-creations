@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
+import { FilterProvider } from "@/contexts/FilterContext";
+import Header from "@/components/dashboard/Header";
 import Index from "./pages/Index";
 import Categorias from "./pages/Categorias";
 import Clientes from "./pages/Clientes";
@@ -19,18 +21,21 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <SidebarProvider>
-          <AppSidebar />
-           <div className="flex min-h-screen flex-1 flex-col w-full">
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/categorias" element={<Categorias />} />
-              <Route path="/clientes" element={<Clientes />} />
-              <Route path="/produtos" element={<Produtos />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </div>
-        </SidebarProvider>
+        <FilterProvider>
+          <SidebarProvider>
+            <AppSidebar />
+            <div className="flex min-h-screen flex-1 flex-col w-full">
+              <Header />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/categorias" element={<Categorias />} />
+                <Route path="/clientes" element={<Clientes />} />
+                <Route path="/produtos" element={<Produtos />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
+          </SidebarProvider>
+        </FilterProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
