@@ -22,7 +22,7 @@ const App = () => (
         <SidebarProvider>
           <AppSidebar />
           <div className="flex min-h-screen flex-1 flex-col w-full">
-            <header className="flex h-12 items-center border-b border-border px-2 md:hidden">
+            <header className="flex h-10 items-center border-b border-border px-2">
               <SidebarTrigger />
             </header>
             <Routes>
