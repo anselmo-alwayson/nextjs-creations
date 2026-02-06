@@ -17,9 +17,9 @@ export default function Produtos() {
         </p>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-4">
-        {/* Product list sidebar - 1/4 width */}
-        <aside className="w-full lg:w-1/4 shrink-0">
+      <div className="flex flex-col lg:flex-row gap-3">
+        {/* Product list sidebar - reduced width (40% of original 1/4) */}
+        <aside className="w-full lg:w-[10%] lg:min-w-[140px] shrink-0">
           <ProdutoList
             produtos={produtos}
             selectedId={selectedId}
