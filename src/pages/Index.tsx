@@ -1,12 +1,111 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useMemo } from "react";
+import { ChevronRight } from "lucide-react";
+import Header from "@/components/dashboard/Header";
+import MetricsCards from "@/components/dashboard/MetricsCards";
+import MapaBrasil from "@/components/dashboard/MapaBrasil";
+import ComparativoChart from "@/components/dashboard/ComparativoChart";
+import EvolucaoChart from "@/components/dashboard/EvolucaoChart";
+import TabelaClientes from "@/components/dashboard/TabelaClientes";
+import PerfilModal from "@/components/dashboard/PerfilModal";
+import ChatButton from "@/components/dashboard/ChatButton";
+import {
+  clientes,
+  regioes,
+  metricasGlobais,
+  evolucaoData,
+  type Cliente,
+} from "@/data/mockData";
 
 const Index = () => {
+  const [periodo, setPeriodo] = useState("ultimos-6-meses");
+  const [regiao, setRegiao] = useState("todas");
+  const [produto, setProduto] = useState("todos");
+  const [selectedCidade, setSelectedCidade] = useState<string | null>(null);
+  const [selectedEstado, setSelectedEstado] = useState<string | null>(null);
+  const [perfilCliente, setPerfilCliente] = useState<Cliente | null>(null);
+  const [chatOpen, setChatOpen] = useState(false);
+
+  const handleSelectCidade = (cidade: string | null, estado: string | null) => {
+    setSelectedCidade(cidade);
+    setSelectedEstado(estado);
+  };
+
+  const filteredClientes = useMemo(() => {
+    if (!selectedCidade) return clientes;
+    return clientes.filter((c) => c.regiao.includes(selectedCidade));
+  }, [selectedCidade]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header
+        periodo={periodo}
+        setPeriodo={setPeriodo}
+        regiao={regiao}
+        setRegiao={setRegiao}
+        produto={produto}
+        setProduto={setProduto}
+        onOpenChat={() => setChatOpen(true)}
+      />
+
+      <main className="mx-auto max-w-[1440px] space-y-4 px-4 py-4 md:px-6">
+        {/* Breadcrumb */}
+        <nav className="flex items-center gap-1 text-xs text-muted-foreground">
+          <button
+            onClick={() => handleSelectCidade(null, null)}
+            className={`transition-colors hover:text-foreground ${!selectedCidade ? "font-semibold text-foreground" : ""}`}
+          >
+            Brasil
+          </button>
+          {selectedEstado && (
+            <>
+              <ChevronRight className="h-3 w-3" />
+              <span className="font-semibold text-foreground">
+                {selectedEstado}
+              </span>
+            </>
+          )}
+          {selectedCidade && (
+            <>
+              <ChevronRight className="h-3 w-3" />
+              <span className="font-semibold text-primary">
+                {selectedCidade}
+              </span>
+            </>
+          )}
+        </nav>
+
+        {/* KPI Cards */}
+        <MetricsCards metricas={metricasGlobais} />
+
+        {/* Map */}
+        <MapaBrasil
+          regioes={regioes}
+          selectedCidade={selectedCidade}
+          onSelectCidade={handleSelectCidade}
+        />
+
+        {/* Charts */}
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <ComparativoChart metricas={metricasGlobais} />
+          <EvolucaoChart data={evolucaoData} />
+        </div>
+
+        {/* Table */}
+        <TabelaClientes
+          clientes={filteredClientes}
+          onViewPerfil={setPerfilCliente}
+        />
+      </main>
+
+      {/* Profile Modal */}
+      <PerfilModal
+        cliente={perfilCliente}
+        open={!!perfilCliente}
+        onClose={() => setPerfilCliente(null)}
+      />
+
+      {/* Chat */}
+      <ChatButton open={chatOpen} onToggle={() => setChatOpen((o) => !o)} />
     </div>
   );
 };
