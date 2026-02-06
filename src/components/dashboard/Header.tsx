@@ -1,20 +1,43 @@
+import { useMemo } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MessageCircle, BarChart3 } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useFilters } from "@/contexts/FilterContext";
 
-const estados = [
-  { value: "todos", label: "Todos os Estados" },
-  { value: "AM", label: "Amazonas" },
-  { value: "BA", label: "Bahia" },
-  { value: "CE", label: "Ceará" },
-  { value: "DF", label: "Distrito Federal" },
-  { value: "MG", label: "Minas Gerais" },
-  { value: "PE", label: "Pernambuco" },
-  { value: "PR", label: "Paraná" },
-  { value: "RJ", label: "Rio de Janeiro" },
-  { value: "RS", label: "Rio Grande do Sul" },
-  { value: "SP", label: "São Paulo" },
+interface EstadoInfo {
+  value: string;
+  label: string;
+  regiao: string;
+}
+
+const todosEstados: EstadoInfo[] = [
+  { value: "AM", label: "Amazonas", regiao: "norte" },
+  { value: "PA", label: "Pará", regiao: "norte" },
+  { value: "RO", label: "Rondônia", regiao: "norte" },
+  { value: "AC", label: "Acre", regiao: "norte" },
+  { value: "AP", label: "Amapá", regiao: "norte" },
+  { value: "RR", label: "Roraima", regiao: "norte" },
+  { value: "TO", label: "Tocantins", regiao: "norte" },
+  { value: "BA", label: "Bahia", regiao: "nordeste" },
+  { value: "CE", label: "Ceará", regiao: "nordeste" },
+  { value: "PE", label: "Pernambuco", regiao: "nordeste" },
+  { value: "MA", label: "Maranhão", regiao: "nordeste" },
+  { value: "PI", label: "Piauí", regiao: "nordeste" },
+  { value: "RN", label: "Rio Grande do Norte", regiao: "nordeste" },
+  { value: "PB", label: "Paraíba", regiao: "nordeste" },
+  { value: "AL", label: "Alagoas", regiao: "nordeste" },
+  { value: "SE", label: "Sergipe", regiao: "nordeste" },
+  { value: "SP", label: "São Paulo", regiao: "sudeste" },
+  { value: "RJ", label: "Rio de Janeiro", regiao: "sudeste" },
+  { value: "MG", label: "Minas Gerais", regiao: "sudeste" },
+  { value: "ES", label: "Espírito Santo", regiao: "sudeste" },
+  { value: "PR", label: "Paraná", regiao: "sul" },
+  { value: "RS", label: "Rio Grande do Sul", regiao: "sul" },
+  { value: "SC", label: "Santa Catarina", regiao: "sul" },
+  { value: "DF", label: "Distrito Federal", regiao: "centro-oeste" },
+  { value: "GO", label: "Goiás", regiao: "centro-oeste" },
+  { value: "MT", label: "Mato Grosso", regiao: "centro-oeste" },
+  { value: "MS", label: "Mato Grosso do Sul", regiao: "centro-oeste" },
 ];
 
 interface HeaderProps {
@@ -23,6 +46,16 @@ interface HeaderProps {
 
 const Header = ({ onOpenChat }: HeaderProps) => {
   const { periodo, setPeriodo, regiao, setRegiao, estado, setEstado, produto, setProduto } = useFilters();
+
+  const estadosFiltrados = useMemo(() => {
+    if (regiao === "todas") return todosEstados;
+    return todosEstados.filter((e) => e.regiao === regiao);
+  }, [regiao]);
+
+  const handleRegiaoChange = (value: string) => {
+    setRegiao(value);
+    setEstado("todos");
+  };
 
   return (
     <header className="nps-gradient-header px-4 py-3 md:px-6 md:py-4">
@@ -57,7 +90,7 @@ const Header = ({ onOpenChat }: HeaderProps) => {
             </SelectContent>
           </Select>
 
-          <Select value={regiao} onValueChange={setRegiao}>
+          <Select value={regiao} onValueChange={handleRegiaoChange}>
             <SelectTrigger className="h-8 w-[130px] border-primary-foreground/30 bg-primary-foreground/10 text-xs text-primary-foreground">
               <SelectValue placeholder="Região" />
             </SelectTrigger>
@@ -76,7 +109,8 @@ const Header = ({ onOpenChat }: HeaderProps) => {
               <SelectValue placeholder="Estado" />
             </SelectTrigger>
             <SelectContent>
-              {estados.map((e) => (
+              <SelectItem value="todos">Todos os Estados</SelectItem>
+              {estadosFiltrados.map((e) => (
                 <SelectItem key={e.value} value={e.value}>
                   {e.label}
                 </SelectItem>
