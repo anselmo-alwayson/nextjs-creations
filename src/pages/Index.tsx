@@ -1,6 +1,5 @@
 import { useState, useMemo } from "react";
 import { ChevronRight } from "lucide-react";
-import Header from "@/components/dashboard/Header";
 import MetricsCards from "@/components/dashboard/MetricsCards";
 import MapaBrasil from "@/components/dashboard/MapaBrasil";
 import ComparativoChart from "@/components/dashboard/ComparativoChart";
@@ -17,9 +16,6 @@ import {
 } from "@/data/mockData";
 
 const Index = () => {
-  const [periodo, setPeriodo] = useState("ultimos-6-meses");
-  const [regiao, setRegiao] = useState("todas");
-  const [produto, setProduto] = useState("todos");
   const [selectedCidade, setSelectedCidade] = useState<string | null>(null);
   const [selectedEstado, setSelectedEstado] = useState<string | null>(null);
   const [perfilCliente, setPerfilCliente] = useState<Cliente | null>(null);
@@ -37,16 +33,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header
-        periodo={periodo}
-        setPeriodo={setPeriodo}
-        regiao={regiao}
-        setRegiao={setRegiao}
-        produto={produto}
-        setProduto={setProduto}
-        onOpenChat={() => setChatOpen(true)}
-      />
-
       <main className="mx-auto max-w-[1440px] space-y-4 px-4 py-4 md:px-6">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1 text-xs text-muted-foreground">
