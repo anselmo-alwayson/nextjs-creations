@@ -84,8 +84,8 @@ export function ProdutoDashboard({ metricas, produtoNome }: ProdutoDashboardProp
 
   return (
     <div className="space-y-4">
-      {/* Top metrics row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      {/* Row 1: Tempo Médio + CSAT */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Tempo Médio de Resposta */}
         <Card>
           <CardHeader className="pb-2">
@@ -119,7 +119,10 @@ export function ProdutoDashboard({ metricas, produtoNome }: ProdutoDashboardProp
             <ScoreGauge value={metricas.csat_score} max={100} label="Score" color={csatColor} />
           </CardContent>
         </Card>
+      </div>
 
+      {/* Row 2: NPS + Total de Clientes */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* NPS */}
         <Card>
           <CardHeader className="pb-2">
