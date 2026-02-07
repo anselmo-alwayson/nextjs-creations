@@ -1,3 +1,4 @@
+import { type ReactNode } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, TrendingDown, TrendingUp, SmilePlus, Meh, Frown } from "lucide-react";
@@ -16,6 +17,9 @@ import {
   Legend,
 } from "recharts";
 import type { ProdutoMetricas } from "@/data/produtosData";
+import { SortableContainer } from "@/components/dashboard/SortableContainer";
+import { SortableSection } from "@/components/dashboard/SortableSection";
+import { useSortableSections } from "@/hooks/useSortableSections";
 
 interface ProdutoDashboardProps {
   metricas: ProdutoMetricas;
@@ -190,13 +194,15 @@ function TimeDiff({ current, previous }: { current: string; previous: string }) 
 }
 
 /* ── Main Dashboard ── */
+const PRODUTO_SECTION_IDS = ["row1-kpis", "row2-gauges", "row3-charts", "row4-comparativo"];
+
 export function ProdutoDashboard({ metricas, produtoNome }: ProdutoDashboardProps) {
   const csatSatisfied = metricas.promotores.percentual + (metricas.neutros.percentual * 0.5);
   const csatUnsatisfied = 100 - csatSatisfied;
+  const { sectionOrder, handleDragEnd } = useSortableSections(PRODUTO_SECTION_IDS);
 
-  return (
-    <div className="space-y-3">
-      {/* ═══ ROW 1: Product Name | CSAT Score | Tempo Médio | NPS Distribution sidebar ═══ */}
+  const sectionsMap: Record<string, ReactNode> = {
+    "row1-kpis": (
       <div className="grid grid-cols-[1fr_1fr_1fr_auto] gap-3">
         {/* Card 1: Product Name */}
         <Card>
@@ -284,8 +290,8 @@ export function ProdutoDashboard({ metricas, produtoNome }: ProdutoDashboardProp
           </Card>
         </div>
       </div>
-
-      {/* ═══ ROW 2: CSAT Donut | NPS Gauge | CES Gauge ═══ */}
+    ),
+    "row2-gauges": (
       <div className="grid grid-cols-[1fr_1fr_1fr_auto] gap-3">
         <Card>
           <CardHeader className="pb-1 pt-3">
@@ -323,8 +329,8 @@ export function ProdutoDashboard({ metricas, produtoNome }: ProdutoDashboardProp
         {/* Spacer to align with the row-span sidebar above */}
         <div className="min-w-[150px]" />
       </div>
-
-      {/* ═══ ROW 3: Satisfação por Categoria | Tempo Mensal | Evolução CSAT ═══ */}
+    ),
+    "row3-charts": (
       <div className="grid grid-cols-3 gap-3">
         {/* Satisfaction Breakdown (Stacked Bar) */}
         <Card>
@@ -399,8 +405,8 @@ export function ProdutoDashboard({ metricas, produtoNome }: ProdutoDashboardProp
           </CardContent>
         </Card>
       </div>
-
-      {/* ═══ ROW 4: Comparativo Respondido vs Calculado ═══ */}
+    ),
+    "row4-comparativo": (
       <div>
         <h2 className="text-sm font-bold text-foreground mb-3">Comparativo: Respondido vs Calculado</h2>
         <div className="grid grid-cols-3 gap-3">
@@ -543,6 +549,18 @@ export function ProdutoDashboard({ metricas, produtoNome }: ProdutoDashboardProp
           </Card>
         </div>
       </div>
-    </div>
+    ),
+  };
+
+  return (
+    <SortableContainer items={sectionOrder} onDragEnd={handleDragEnd}>
+      <div className="space-y-3">
+        {sectionOrder.map((id) => (
+          <SortableSection key={id} id={id}>
+            {sectionsMap[id]}
+          </SortableSection>
+        ))}
+      </div>
+    </SortableContainer>
   );
 }
