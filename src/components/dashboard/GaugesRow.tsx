@@ -120,7 +120,7 @@ export function GaugesRow({ metricas, onDrillDown }: GaugesRowProps) {
   const clickable = "cursor-pointer group hover:shadow-md transition-shadow";
 
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
       <Card
         className={clickable}
         onClick={() => onDrillDown?.("csat", metricas)}

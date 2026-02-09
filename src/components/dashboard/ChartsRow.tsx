@@ -16,7 +16,7 @@ export function ChartsRow({ metricas, onDrillDown }: ChartsRowProps) {
   const clickable = "cursor-pointer group hover:shadow-md transition-shadow";
 
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
       {/* Satisfaction Breakdown (Stacked Bar) */}
       <Card className={clickable} onClick={() => onDrillDown?.("satisfacao_categoria", metricas)}>
         <CardHeader className="pb-2 relative">
