@@ -3,7 +3,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Eye, ChevronLeft, ChevronRight, ArrowUpDown } from "lucide-react";
+import { Eye, ChevronLeft, ChevronRight, ArrowUpDown, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import type { Cliente } from "@/data/mockData";
 import { maskCpf } from "@/data/mockData";
 
@@ -19,6 +20,7 @@ type SortDir = "asc" | "desc";
 
 const TabelaClientes = ({ clientes, onViewPerfil }: TabelaClientesProps) => {
   const [filtroCategoria, setFiltroCategoria] = useState("todos");
+  const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(0);
   const [sortField, setSortField] = useState<SortField>("nome");
   const [sortDir, setSortDir] = useState<SortDir>("asc");
@@ -28,6 +30,18 @@ const TabelaClientes = ({ clientes, onViewPerfil }: TabelaClientesProps) => {
     if (filtroCategoria !== "todos") {
       result = result.filter((c) => c.categoria === filtroCategoria);
     }
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      result = result.filter((c) =>
+        c.nome.toLowerCase().includes(q) ||
+        c.cpf.includes(q) ||
+        maskCpf(c.cpf).includes(q) ||
+        c.tipo.toLowerCase().includes(q) ||
+        String(c.nps_score).includes(q) ||
+        c.categoria.toLowerCase().includes(q) ||
+        c.regiao.toLowerCase().includes(q)
+      );
+    }
     result.sort((a, b) => {
       const valA = a[sortField];
       const valB = b[sortField];
@@ -35,7 +49,7 @@ const TabelaClientes = ({ clientes, onViewPerfil }: TabelaClientesProps) => {
       return sortDir === "asc" ? cmp : -cmp;
     });
     return result;
-  }, [clientes, filtroCategoria, sortField, sortDir]);
+  }, [clientes, filtroCategoria, searchQuery, sortField, sortDir]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const paginated = filtered.slice(page * ITEMS_PER_PAGE, (page + 1) * ITEMS_PER_PAGE);
@@ -68,6 +82,15 @@ const TabelaClientes = ({ clientes, onViewPerfil }: TabelaClientesProps) => {
       <div className="flex flex-col gap-2 border-b border-border px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="text-sm font-semibold text-foreground">Clientes</h3>
         <div className="flex items-center gap-2 mr-10">
+          <div className="relative">
+            <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+            <Input
+              placeholder="Buscar nome, CPF, tipo, NPS, região..."
+              value={searchQuery}
+              onChange={(e) => { setSearchQuery(e.target.value); setPage(0); }}
+              className="h-7 w-[220px] pl-7 text-xs"
+            />
+          </div>
           <Select value={filtroCategoria} onValueChange={(v) => { setFiltroCategoria(v); setPage(0); }}>
             <SelectTrigger className="h-7 w-[160px] text-xs">
               <SelectValue placeholder="Categoria" />
