@@ -1,10 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Search } from "lucide-react";
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid,
   Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
 import type { ProdutoMetricas } from "@/data/produtosData";
+import type { DrillDownType } from "./DrillDownModal";
 
 /* ── NPS Donut ── */
 function NpsDonut({ score, color }: { score: number; color: string }) {
@@ -33,14 +35,14 @@ function NpsDonut({ score, color }: { score: number; color: string }) {
   );
 }
 
-
-
 interface ComparativoRowProps {
   metricas: ProdutoMetricas;
+  onDrillDown?: (type: DrillDownType, data?: any) => void;
 }
 
-export function ComparativoRow({ metricas }: ComparativoRowProps) {
+export function ComparativoRow({ metricas, onDrillDown }: ComparativoRowProps) {
   const { comparativo } = metricas;
+  const clickable = "cursor-pointer group hover:shadow-md transition-shadow";
 
   const renderBreakdown = (section: typeof comparativo.nps_respondido) => (
     <div className="mt-3 space-y-1 w-full px-4">
@@ -63,8 +65,11 @@ export function ComparativoRow({ metricas }: ComparativoRowProps) {
   return (
     <div className="grid grid-cols-3 gap-3">
       {/* NPS Respondido */}
-      <Card>
-        <CardHeader className="pb-1 pt-4">
+      <Card className={clickable} onClick={() => onDrillDown?.("comp_respondido", comparativo.nps_respondido)}>
+        <CardHeader className="pb-1 pt-4 relative">
+          <div className="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Search className="h-3.5 w-3.5 text-muted-foreground" />
+          </div>
           <CardTitle className="text-[12px] font-semibold text-foreground text-center">
             NPS Respondido
           </CardTitle>
@@ -79,8 +84,11 @@ export function ComparativoRow({ metricas }: ComparativoRowProps) {
       </Card>
 
       {/* NPS Calculado (IA) */}
-      <Card>
-        <CardHeader className="pb-1 pt-4">
+      <Card className={clickable} onClick={() => onDrillDown?.("comp_calculado", comparativo.nps_calculado)}>
+        <CardHeader className="pb-1 pt-4 relative">
+          <div className="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Search className="h-3.5 w-3.5 text-muted-foreground" />
+          </div>
           <CardTitle className="text-[12px] font-semibold text-foreground text-center flex items-center justify-center gap-2">
             NPS Calculado (IA)
             <Badge variant="destructive" className="text-[8px] px-1.5 py-0 h-4 uppercase tracking-wider">
@@ -98,8 +106,11 @@ export function ComparativoRow({ metricas }: ComparativoRowProps) {
       </Card>
 
       {/* Evolução do NPS */}
-      <Card>
-        <CardHeader className="pb-2 pt-4">
+      <Card className={clickable} onClick={() => onDrillDown?.("evolucao_nps", comparativo)}>
+        <CardHeader className="pb-2 pt-4 relative">
+          <div className="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Search className="h-3.5 w-3.5 text-muted-foreground" />
+          </div>
           <CardTitle className="text-[12px] font-semibold text-foreground">
             Evolução do NPS — Últimos 6 meses
           </CardTitle>

@@ -1,6 +1,7 @@
-import { SmilePlus } from "lucide-react";
+import { SmilePlus, Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ProdutoMetricas } from "@/data/produtosData";
+import type { DrillDownType } from "./DrillDownModal";
 
 /* ── Speedometer Gauge (semicircular with needle) ── */
 function SpeedometerGauge({
@@ -109,16 +110,25 @@ function DonutGauge({ satisfied, unsatisfied }: { satisfied: number; unsatisfied
 
 interface GaugesRowProps {
   metricas: ProdutoMetricas;
+  onDrillDown?: (type: DrillDownType, data?: any) => void;
 }
 
-export function GaugesRow({ metricas }: GaugesRowProps) {
+export function GaugesRow({ metricas, onDrillDown }: GaugesRowProps) {
   const csatSatisfied = metricas.promotores.percentual + metricas.neutros.percentual * 0.5;
   const csatUnsatisfied = 100 - csatSatisfied;
 
+  const clickable = "cursor-pointer group hover:shadow-md transition-shadow";
+
   return (
     <div className="grid grid-cols-3 gap-3">
-      <Card>
-        <CardHeader className="pb-1 pt-3">
+      <Card
+        className={clickable}
+        onClick={() => onDrillDown?.("csat", metricas)}
+      >
+        <CardHeader className="pb-1 pt-3 relative">
+          <div className="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Search className="h-3.5 w-3.5 text-muted-foreground" />
+          </div>
           <CardTitle className="text-[11px] text-muted-foreground font-medium text-center">
             Customer Satisfaction Score (CSAT)
           </CardTitle>
@@ -128,8 +138,14 @@ export function GaugesRow({ metricas }: GaugesRowProps) {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader className="pb-1 pt-3">
+      <Card
+        className={clickable}
+        onClick={() => onDrillDown?.("nps_gauge", metricas)}
+      >
+        <CardHeader className="pb-1 pt-3 relative">
+          <div className="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Search className="h-3.5 w-3.5 text-muted-foreground" />
+          </div>
           <CardTitle className="text-[11px] text-muted-foreground font-medium text-center">
             Net Promoter Score (NPS)
           </CardTitle>
@@ -139,8 +155,14 @@ export function GaugesRow({ metricas }: GaugesRowProps) {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader className="pb-1 pt-3">
+      <Card
+        className={clickable}
+        onClick={() => onDrillDown?.("ces", metricas)}
+      >
+        <CardHeader className="pb-1 pt-3 relative">
+          <div className="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Search className="h-3.5 w-3.5 text-muted-foreground" />
+          </div>
           <CardTitle className="text-[11px] text-muted-foreground font-medium text-center">
             Customer Effort Score (CES)
           </CardTitle>
