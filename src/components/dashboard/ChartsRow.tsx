@@ -1,20 +1,28 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Search } from "lucide-react";
 import {
   AreaChart, Area, LineChart, Line, BarChart, Bar,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
 } from "recharts";
 import type { ProdutoMetricas } from "@/data/produtosData";
+import type { DrillDownType } from "./DrillDownModal";
 
 interface ChartsRowProps {
   metricas: ProdutoMetricas;
+  onDrillDown?: (type: DrillDownType, data?: any) => void;
 }
 
-export function ChartsRow({ metricas }: ChartsRowProps) {
+export function ChartsRow({ metricas, onDrillDown }: ChartsRowProps) {
+  const clickable = "cursor-pointer group hover:shadow-md transition-shadow";
+
   return (
     <div className="grid grid-cols-3 gap-3">
       {/* Satisfaction Breakdown (Stacked Bar) */}
-      <Card>
-        <CardHeader className="pb-2">
+      <Card className={clickable} onClick={() => onDrillDown?.("satisfacao_categoria", metricas)}>
+        <CardHeader className="pb-2 relative">
+          <div className="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Search className="h-3.5 w-3.5 text-muted-foreground" />
+          </div>
           <CardTitle className="text-[11px] font-medium text-muted-foreground">
             Satisfação por Categoria
           </CardTitle>
@@ -38,8 +46,11 @@ export function ChartsRow({ metricas }: ChartsRowProps) {
       </Card>
 
       {/* Average Response Time (Line) */}
-      <Card>
-        <CardHeader className="pb-2">
+      <Card className={clickable} onClick={() => onDrillDown?.("tempo_medio", metricas)}>
+        <CardHeader className="pb-2 relative">
+          <div className="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Search className="h-3.5 w-3.5 text-muted-foreground" />
+          </div>
           <CardTitle className="text-[11px] font-medium text-muted-foreground">
             Tempo Médio de Resposta - Mensal
           </CardTitle>
@@ -59,8 +70,11 @@ export function ChartsRow({ metricas }: ChartsRowProps) {
       </Card>
 
       {/* CSAT Evolution (Area) */}
-      <Card>
-        <CardHeader className="pb-2">
+      <Card className={clickable} onClick={() => onDrillDown?.("evolucao_csat", metricas)}>
+        <CardHeader className="pb-2 relative">
+          <div className="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Search className="h-3.5 w-3.5 text-muted-foreground" />
+          </div>
           <CardTitle className="text-[11px] font-medium text-muted-foreground">
             Evolução CSAT - Últimos 6 meses
           </CardTitle>
