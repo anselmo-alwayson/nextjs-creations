@@ -55,12 +55,9 @@ export default function FilterBar({ filters, onFiltersChange }: FilterBarProps) 
   const update = (partial: Partial<Filters>) =>
     onFiltersChange({ ...filters, ...partial });
 
-  const estadosDisponiveis = filters.regiao
-    ? REGIOES[filters.regiao]?.filter((uf) => uf in ESTADOS) ?? []
-    : Object.keys(ESTADOS);
+  const estadosDisponiveis = Object.keys(ESTADOS);
 
   const activeFilters: { key: keyof Filters; label: string }[] = [];
-  if (filters.regiao) activeFilters.push({ key: "regiao", label: `Região: ${filters.regiao}` });
   if (filters.estado) activeFilters.push({ key: "estado", label: `Estado: ${ESTADOS[filters.estado] ?? filters.estado}` });
   if (filters.produto) {
     const p = produtos.find((pr) => String(pr.id) === filters.produto);
@@ -95,22 +92,6 @@ export default function FilterBar({ filters, onFiltersChange }: FilterBarProps) 
           </SelectContent>
         </Select>
 
-        {/* Região */}
-        <Select
-          value={filters.regiao ?? ""}
-          onValueChange={(v) => update({ regiao: v || null, estado: null })}
-        >
-          <SelectTrigger className="h-8 w-[120px] sm:w-[140px] text-xs">
-            <SelectValue placeholder="Região" />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.keys(REGIOES).map((r) => (
-              <SelectItem key={r} value={r}>
-                {r}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
 
         {/* Estado */}
         <Select
