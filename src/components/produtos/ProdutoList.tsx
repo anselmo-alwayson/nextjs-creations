@@ -18,15 +18,15 @@ export function ProdutoList({ produtos, selectedId, onSelect }: ProdutoListProps
   }, {});
 
   return (
-    <Card className="h-full">
-      <CardHeader className="pb-3">
+    <Card className="h-full flex flex-col overflow-hidden">
+      <CardHeader className="pb-3 shrink-0">
         <CardTitle className="flex items-center gap-2 text-sm">
           <Package className="h-4 w-4 text-primary" />
           Produtos
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-0">
-        <ScrollArea className="h-[calc(100vh-220px)] px-3 pb-3">
+      <CardContent className="p-0 flex-1 min-h-0">
+        <ScrollArea className="h-full px-3 pb-3">
           {Object.entries(grouped).map(([categoria, items]) => (
             <div key={categoria} className="mb-3">
               <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5 px-2">

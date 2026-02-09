@@ -32,8 +32,8 @@ export default function Dashboard() {
         <MetricsCards metricas={metricasGlobais} />
 
         {/* Row 2: Products list + Map (products list spans into gauges row) */}
-        <div className="flex gap-3">
-          {/* Product list sidebar */}
+        <div className="flex gap-3 items-stretch">
+          {/* Product list sidebar - height matches map */}
           <aside className="w-[180px] shrink-0">
             <ProdutoList
               produtos={produtos}
