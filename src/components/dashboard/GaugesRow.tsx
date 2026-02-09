@@ -1,5 +1,5 @@
 import { SmilePlus, Search } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ProdutoMetricas } from "@/data/produtosData";
 import type { DrillDownType } from "./DrillDownModal";
 
@@ -108,69 +108,82 @@ function DonutGauge({ satisfied, unsatisfied }: { satisfied: number; unsatisfied
   );
 }
 
+/* ── Individual Card Content Components ── */
+
+interface CardContentProps {
+  metricas: ProdutoMetricas;
+  onDrillDown?: (type: DrillDownType, data?: any) => void;
+}
+
+export function CSATCardContent({ metricas, onDrillDown }: CardContentProps) {
+  const csatSatisfied = metricas.promotores.percentual + metricas.neutros.percentual * 0.5;
+  const csatUnsatisfied = 100 - csatSatisfied;
+
+  return (
+    <div className="cursor-pointer" onClick={() => onDrillDown?.("csat", metricas)}>
+      <CardHeader className="pb-1 pt-3 relative">
+        <div className="absolute top-2 right-3 opacity-0 group-hover/drag:opacity-100 transition-opacity">
+          <Search className="h-3.5 w-3.5 text-muted-foreground" />
+        </div>
+        <CardTitle className="text-[11px] text-muted-foreground font-medium text-center">
+          Customer Satisfaction Score (CSAT)
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex items-center justify-center py-3">
+        <DonutGauge satisfied={csatSatisfied} unsatisfied={csatUnsatisfied} />
+      </CardContent>
+    </div>
+  );
+}
+
+export function NPSGaugeCardContent({ metricas, onDrillDown }: CardContentProps) {
+  return (
+    <div className="cursor-pointer" onClick={() => onDrillDown?.("nps_gauge", metricas)}>
+      <CardHeader className="pb-1 pt-3 relative">
+        <div className="absolute top-2 right-3 opacity-0 group-hover/drag:opacity-100 transition-opacity">
+          <Search className="h-3.5 w-3.5 text-muted-foreground" />
+        </div>
+        <CardTitle className="text-[11px] text-muted-foreground font-medium text-center">
+          Net Promoter Score (NPS)
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex items-center justify-center py-3">
+        <SpeedometerGauge value={metricas.nps_score} min={-100} max={100} label="NPS Score" />
+      </CardContent>
+    </div>
+  );
+}
+
+export function CESCardContent({ metricas, onDrillDown }: CardContentProps) {
+  return (
+    <div className="cursor-pointer" onClick={() => onDrillDown?.("ces", metricas)}>
+      <CardHeader className="pb-1 pt-3 relative">
+        <div className="absolute top-2 right-3 opacity-0 group-hover/drag:opacity-100 transition-opacity">
+          <Search className="h-3.5 w-3.5 text-muted-foreground" />
+        </div>
+        <CardTitle className="text-[11px] text-muted-foreground font-medium text-center">
+          Customer Effort Score (CES)
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex items-center justify-center py-3">
+        <SpeedometerGauge value={metricas.ces_score} min={0} max={100} label="CES Score" />
+      </CardContent>
+    </div>
+  );
+}
+
+/* ── Legacy Row Export (kept for backward compat) ── */
 interface GaugesRowProps {
   metricas: ProdutoMetricas;
   onDrillDown?: (type: DrillDownType, data?: any) => void;
 }
 
 export function GaugesRow({ metricas, onDrillDown }: GaugesRowProps) {
-  const csatSatisfied = metricas.promotores.percentual + metricas.neutros.percentual * 0.5;
-  const csatUnsatisfied = 100 - csatSatisfied;
-
-  const clickable = "cursor-pointer group hover:shadow-md transition-shadow";
-
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-      <Card
-        className={clickable}
-        onClick={() => onDrillDown?.("csat", metricas)}
-      >
-        <CardHeader className="pb-1 pt-3 relative">
-          <div className="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Search className="h-3.5 w-3.5 text-muted-foreground" />
-          </div>
-          <CardTitle className="text-[11px] text-muted-foreground font-medium text-center">
-            Customer Satisfaction Score (CSAT)
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="flex items-center justify-center py-3">
-          <DonutGauge satisfied={csatSatisfied} unsatisfied={csatUnsatisfied} />
-        </CardContent>
-      </Card>
-
-      <Card
-        className={clickable}
-        onClick={() => onDrillDown?.("nps_gauge", metricas)}
-      >
-        <CardHeader className="pb-1 pt-3 relative">
-          <div className="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Search className="h-3.5 w-3.5 text-muted-foreground" />
-          </div>
-          <CardTitle className="text-[11px] text-muted-foreground font-medium text-center">
-            Net Promoter Score (NPS)
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="flex items-center justify-center py-3">
-          <SpeedometerGauge value={metricas.nps_score} min={-100} max={100} label="NPS Score" />
-        </CardContent>
-      </Card>
-
-      <Card
-        className={clickable}
-        onClick={() => onDrillDown?.("ces", metricas)}
-      >
-        <CardHeader className="pb-1 pt-3 relative">
-          <div className="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Search className="h-3.5 w-3.5 text-muted-foreground" />
-          </div>
-          <CardTitle className="text-[11px] text-muted-foreground font-medium text-center">
-            Customer Effort Score (CES)
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="flex items-center justify-center py-3">
-          <SpeedometerGauge value={metricas.ces_score} min={0} max={100} label="CES Score" />
-        </CardContent>
-      </Card>
+      <CSATCardContent metricas={metricas} onDrillDown={onDrillDown} />
+      <NPSGaugeCardContent metricas={metricas} onDrillDown={onDrillDown} />
+      <CESCardContent metricas={metricas} onDrillDown={onDrillDown} />
     </div>
   );
 }

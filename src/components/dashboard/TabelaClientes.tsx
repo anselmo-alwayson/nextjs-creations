@@ -67,7 +67,8 @@ const TabelaClientes = ({ clientes, onViewPerfil }: TabelaClientesProps) => {
     <div className="animate-fade-in-up rounded-xl border border-border bg-card shadow-sm">
       <div className="flex flex-col gap-2 border-b border-border px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="text-sm font-semibold text-foreground">Clientes</h3>
-        <Select value={filtroCategoria} onValueChange={(v) => { setFiltroCategoria(v); setPage(0); }}>
+        <div className="flex items-center gap-2">
+          <Select value={filtroCategoria} onValueChange={(v) => { setFiltroCategoria(v); setPage(0); }}>
           <SelectTrigger className="h-7 w-[160px] text-xs">
             <SelectValue placeholder="Categoria" />
           </SelectTrigger>
@@ -78,6 +79,7 @@ const TabelaClientes = ({ clientes, onViewPerfil }: TabelaClientesProps) => {
             <SelectItem value="Detrator">Detratores</SelectItem>
           </SelectContent>
         </Select>
+        </div>
       </div>
 
       {/* Desktop Table */}
