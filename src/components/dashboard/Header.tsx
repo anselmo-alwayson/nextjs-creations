@@ -1,68 +1,15 @@
-import { useMemo } from "react";
+import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MessageCircle, BarChart3 } from "lucide-react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { useFilters } from "@/contexts/FilterContext";
+import { BarChart3 } from "lucide-react";
 
-interface EstadoInfo {
-  value: string;
-  label: string;
-  regiao: string;
-}
-
-const todosEstados: EstadoInfo[] = [
-  { value: "AM", label: "Amazonas", regiao: "norte" },
-  { value: "PA", label: "Pará", regiao: "norte" },
-  { value: "RO", label: "Rondônia", regiao: "norte" },
-  { value: "AC", label: "Acre", regiao: "norte" },
-  { value: "AP", label: "Amapá", regiao: "norte" },
-  { value: "RR", label: "Roraima", regiao: "norte" },
-  { value: "TO", label: "Tocantins", regiao: "norte" },
-  { value: "BA", label: "Bahia", regiao: "nordeste" },
-  { value: "CE", label: "Ceará", regiao: "nordeste" },
-  { value: "PE", label: "Pernambuco", regiao: "nordeste" },
-  { value: "MA", label: "Maranhão", regiao: "nordeste" },
-  { value: "PI", label: "Piauí", regiao: "nordeste" },
-  { value: "RN", label: "Rio Grande do Norte", regiao: "nordeste" },
-  { value: "PB", label: "Paraíba", regiao: "nordeste" },
-  { value: "AL", label: "Alagoas", regiao: "nordeste" },
-  { value: "SE", label: "Sergipe", regiao: "nordeste" },
-  { value: "SP", label: "São Paulo", regiao: "sudeste" },
-  { value: "RJ", label: "Rio de Janeiro", regiao: "sudeste" },
-  { value: "MG", label: "Minas Gerais", regiao: "sudeste" },
-  { value: "ES", label: "Espírito Santo", regiao: "sudeste" },
-  { value: "PR", label: "Paraná", regiao: "sul" },
-  { value: "RS", label: "Rio Grande do Sul", regiao: "sul" },
-  { value: "SC", label: "Santa Catarina", regiao: "sul" },
-  { value: "DF", label: "Distrito Federal", regiao: "centro-oeste" },
-  { value: "GO", label: "Goiás", regiao: "centro-oeste" },
-  { value: "MT", label: "Mato Grosso", regiao: "centro-oeste" },
-  { value: "MS", label: "Mato Grosso do Sul", regiao: "centro-oeste" },
-];
-
-interface HeaderProps {
-  onOpenChat?: () => void;
-}
-
-const Header = ({ onOpenChat }: HeaderProps) => {
-  const { periodo, setPeriodo, regiao, setRegiao, estado, setEstado, produto, setProduto } = useFilters();
-
-  const estadosFiltrados = useMemo(() => {
-    if (regiao === "todas") return todosEstados;
-    return todosEstados.filter((e) => e.regiao === regiao);
-  }, [regiao]);
-
-  const handleRegiaoChange = (value: string) => {
-    setRegiao(value);
-    setEstado("todos");
-  };
+const Header = () => {
+  const [periodo, setPeriodo] = useState("ultimos-6-meses");
 
   return (
     <header className="nps-gradient-header px-4 py-3 md:px-6 md:py-4">
-      <div className="mx-auto flex max-w-[1440px] flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <SidebarTrigger className="text-primary-foreground hover:bg-primary-foreground/20 h-9 w-9" />
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-foreground/20">
             <BarChart3 className="h-5 w-5 text-primary-foreground" />
           </div>
@@ -76,71 +23,18 @@ const Header = ({ onOpenChat }: HeaderProps) => {
           </div>
         </div>
 
-        {/* Filters */}
-        <div className="flex flex-wrap items-center gap-2">
-          <Select value={periodo} onValueChange={setPeriodo}>
-            <SelectTrigger className="h-8 w-[130px] border-primary-foreground/30 bg-primary-foreground/10 text-xs text-primary-foreground">
-              <SelectValue placeholder="Período" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="ultimo-mes">Último Mês</SelectItem>
-              <SelectItem value="ultimos-3-meses">Últimos 3 Meses</SelectItem>
-              <SelectItem value="ultimos-6-meses">Últimos 6 Meses</SelectItem>
-              <SelectItem value="ultimo-ano">Último Ano</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select value={regiao} onValueChange={handleRegiaoChange}>
-            <SelectTrigger className="h-8 w-[130px] border-primary-foreground/30 bg-primary-foreground/10 text-xs text-primary-foreground">
-              <SelectValue placeholder="Região" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="todas">Todas as Regiões</SelectItem>
-              <SelectItem value="sudeste">Sudeste</SelectItem>
-              <SelectItem value="sul">Sul</SelectItem>
-              <SelectItem value="nordeste">Nordeste</SelectItem>
-              <SelectItem value="norte">Norte</SelectItem>
-              <SelectItem value="centro-oeste">Centro-Oeste</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select value={estado} onValueChange={setEstado}>
-            <SelectTrigger className="h-8 w-[130px] border-primary-foreground/30 bg-primary-foreground/10 text-xs text-primary-foreground">
-              <SelectValue placeholder="Estado" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="todos">Todos os Estados</SelectItem>
-              {estadosFiltrados.map((e) => (
-                <SelectItem key={e.value} value={e.value}>
-                  {e.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select value={produto} onValueChange={setProduto}>
-            <SelectTrigger className="h-8 w-[130px] border-primary-foreground/30 bg-primary-foreground/10 text-xs text-primary-foreground">
-              <SelectValue placeholder="Produto" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="todos">Todos os Produtos</SelectItem>
-              <SelectItem value="movel">Claro Móvel</SelectItem>
-              <SelectItem value="fixo">Claro Fixo</SelectItem>
-              <SelectItem value="internet">Internet</SelectItem>
-              <SelectItem value="tv">Claro TV</SelectItem>
-            </SelectContent>
-          </Select>
-
-          {onOpenChat && (
-            <button
-              onClick={onOpenChat}
-              className="flex h-8 items-center gap-1.5 rounded-md border border-primary-foreground/30 bg-primary-foreground/10 px-3 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary-foreground/20"
-            >
-              <MessageCircle className="h-3.5 w-3.5" />
-              Chat Maestro
-            </button>
-          )}
-        </div>
+        {/* Period selector */}
+        <Select value={periodo} onValueChange={setPeriodo}>
+          <SelectTrigger className="h-8 w-[160px] border-primary-foreground/30 bg-primary-foreground/10 text-xs text-primary-foreground">
+            <SelectValue placeholder="Período" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="ultimo-mes">Último Mês</SelectItem>
+            <SelectItem value="ultimos-3-meses">Últimos 3 Meses</SelectItem>
+            <SelectItem value="ultimos-6-meses">Últimos 6 Meses</SelectItem>
+            <SelectItem value="ultimo-ano">Último Ano</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
     </header>
   );
