@@ -8,6 +8,7 @@ import "leaflet/dist/leaflet.css";
 interface MapaBrasilProps {
   regioes: RegionalData[];
   selectedCidade: string | null;
+  selectedEstado?: string | null;
   onSelectCidade: (cidade: string | null, estado: string | null) => void;
 }
 
@@ -81,7 +82,7 @@ function BrazilHighlight() {
   );
 }
 
-const MapaBrasil = ({ regioes, selectedCidade, onSelectCidade }: MapaBrasilProps) => {
+const MapaBrasil = ({ regioes, selectedCidade, selectedEstado, onSelectCidade }: MapaBrasilProps) => {
   const [hoveredCity, setHoveredCity] = useState<string | null>(null);
 
   const handleCityClick = (regiao: RegionalData) => {
@@ -118,7 +119,7 @@ const MapaBrasil = ({ regioes, selectedCidade, onSelectCidade }: MapaBrasilProps
 
             {regioes.map((regiao) => {
               const color = cssVarToHex(getCategoriaColor(regiao.categoria_cor));
-              const isSelected = selectedCidade === regiao.cidade;
+              const isSelected = selectedCidade === regiao.cidade || (!!selectedEstado && regiao.estado === selectedEstado);
               const isHovered = hoveredCity === regiao.cidade;
               const radius = getMarkerRadius(regiao.total_clientes, isSelected || isHovered);
 
@@ -169,12 +170,13 @@ const MapaBrasil = ({ regioes, selectedCidade, onSelectCidade }: MapaBrasilProps
             </button>
             {regioes.map((r) => {
               const color = cssVarToHex(getCategoriaColor(r.categoria_cor));
+              const isActive = selectedCidade === r.cidade || (!!selectedEstado && r.estado === selectedEstado);
               return (
                 <button
                   key={r.cidade}
                   onClick={() => handleCityClick(r)}
                   className={`flex items-center gap-1.5 rounded-md px-2 py-1.5 text-left text-[11px] transition-colors w-full ${
-                    selectedCidade === r.cidade
+                    isActive
                       ? "bg-accent font-semibold text-accent-foreground"
                       : "hover:bg-secondary"
                   }`}

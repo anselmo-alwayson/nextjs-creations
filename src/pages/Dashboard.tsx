@@ -102,6 +102,27 @@ export default function Dashboard() {
   const handleSelectCidade = (cidade: string | null, estado: string | null) => {
     setSelectedCidade(cidade);
     setSelectedEstado(estado);
+    // Sync estado filter with map selection
+    setFilters((prev) => ({ ...prev, estado: estado }));
+  };
+
+  // When filter estado changes (from select), sync map
+  const handleFiltersChange = (newFilters: Filters) => {
+    setFilters(newFilters);
+    if (newFilters.estado !== filters.estado) {
+      if (newFilters.estado) {
+        // Find first city in that state to focus the map
+        const cityInState = regioes.find((r) => r.estado === newFilters.estado);
+        if (cityInState) {
+          setSelectedCidade(cityInState.cidade);
+          setSelectedEstado(cityInState.estado);
+        }
+      } else {
+        // Estado cleared — reset map
+        setSelectedCidade(null);
+        setSelectedEstado(null);
+      }
+    }
   };
 
   const handleDrillDown = (type: DrillDownType, data?: any) => {
@@ -112,7 +133,7 @@ export default function Dashboard() {
     <main className="flex-1 overflow-auto bg-background">
       <div className="mx-auto max-w-[1440px] space-y-3 p-3 sm:space-y-4 sm:p-4 md:p-5">
         {/* Filters */}
-        <FilterBar filters={filters} onFiltersChange={setFilters} />
+        <FilterBar filters={filters} onFiltersChange={handleFiltersChange} />
 
         {/* Row 1: Metric cards */}
         <MetricsCards metricas={filteredMetricas} onDrillDown={handleDrillDown} />
@@ -130,6 +151,7 @@ export default function Dashboard() {
             <MapaBrasil
               regioes={regioes}
               selectedCidade={selectedCidade}
+              selectedEstado={selectedEstado}
               onSelectCidade={handleSelectCidade}
             />
           </div>
