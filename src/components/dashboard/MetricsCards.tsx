@@ -107,7 +107,7 @@ const MetricsCards = ({ metricas }: MetricsCardsProps) => {
   return (
     <div
       ref={scrollRef}
-      className="flex gap-3 overflow-x-auto pb-1 scrollbar-thin cursor-grab active:cursor-grabbing select-none"
+      className="flex gap-3 overflow-x-auto pb-1 cursor-grab active:cursor-grabbing select-none scrollbar-hide"
       style={{ WebkitOverflowScrolling: "touch" }}
       onMouseDown={onMouseDown}
       onMouseMove={onMouseMove}
