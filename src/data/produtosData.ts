@@ -358,6 +358,18 @@ const metricasPorProduto: Record<number, ProdutoMetricas> = {
   },
 };
 
-export function getMetricasProduto(produtoId: number): ProdutoMetricas {
-  return metricasPorProduto[produtoId] || metricasPorProduto[1];
+export function getMetricasProduto(produtoId: number, months?: number): ProdutoMetricas {
+  const base = metricasPorProduto[produtoId] || metricasPorProduto[1];
+  if (!months || months >= 6) return base;
+  // Slice evolution arrays to match the period
+  const sliceCount = Math.min(months, base.evolucao_mensal.length);
+  return {
+    ...base,
+    evolucao_mensal: base.evolucao_mensal.slice(-sliceCount),
+    tempo_resposta_mensal: base.tempo_resposta_mensal.slice(-sliceCount),
+    comparativo: {
+      ...base.comparativo,
+      evolucao_nps: base.comparativo.evolucao_nps.slice(-sliceCount),
+    },
+  };
 }

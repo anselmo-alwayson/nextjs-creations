@@ -13,7 +13,7 @@ import {
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { clientes } from "@/data/mockData";
-import { regioes } from "@/data/mockData";
+import { regioes, getPeriodCutoffDate, getPeriodMonths } from "@/data/mockData";
 import { produtos, getMetricasProduto } from "@/data/produtosData";
 import MetricsCards from "@/components/dashboard/MetricsCards";
 import MapaBrasil from "@/components/dashboard/MapaBrasil";
@@ -74,7 +74,8 @@ export default function Dashboard() {
 
   const [drillDown, setDrillDown] = useState<{ type: DrillDownType; data?: any } | null>(null);
 
-  const metricas = getMetricasProduto(selectedProdutoId);
+  const periodMonths = getPeriodMonths(filters.periodo);
+  const metricas = getMetricasProduto(selectedProdutoId, periodMonths);
 
   const { sectionOrder, handleDragEnd } = useSortableSections(DEFAULT_ORDER);
 
@@ -85,6 +86,9 @@ export default function Dashboard() {
 
   const filteredClientes = useMemo(() => {
     let result = [...clientes];
+    // Period filter
+    const cutoff = getPeriodCutoffDate(filters.periodo);
+    result = result.filter((c) => new Date(c.data_cadastro) >= cutoff);
     if (filters.regiao) {
       const ufs = REGIOES_UF[filters.regiao] ?? [];
       result = result.filter((c) => ufs.includes(extractUF(c.regiao)));

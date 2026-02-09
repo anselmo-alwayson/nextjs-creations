@@ -39,26 +39,26 @@ export interface EvolucaoData {
 }
 
 export const clientes: Cliente[] = [
-  { id: 1, nome: "Maria Silva", cpf: "123.456.789-00", telefone: "(11) 98765-4321", nps_score: 9, categoria: "Promotor", tipo: "Respondido", regiao: "São Paulo - SP", produtos: ["Claro Móvel 50GB", "Internet 500MB"], data_cadastro: "2020-03-15", endereco: "Rua Augusta, 1200 - São Paulo, SP" },
-  { id: 2, nome: "João Santos", cpf: "987.654.321-00", telefone: "(21) 97654-3210", nps_score: 4, categoria: "Detrator", tipo: "Calculado", regiao: "Rio de Janeiro - RJ", produtos: ["Claro Móvel 20GB"], data_cadastro: "2019-07-22", endereco: "Av. Atlântica, 500 - Rio de Janeiro, RJ" },
-  { id: 3, nome: "Ana Costa", cpf: "456.789.123-00", telefone: "(11) 96543-2109", nps_score: 10, categoria: "Promotor", tipo: "Respondido", regiao: "São Paulo - SP", produtos: ["Claro Móvel 100GB", "Claro TV", "Internet 1GB"], data_cadastro: "2021-01-10", endereco: "Rua Oscar Freire, 88 - São Paulo, SP" },
-  { id: 4, nome: "Pedro Oliveira", cpf: "321.654.987-00", telefone: "(61) 95432-1098", nps_score: 7, categoria: "Neutro", tipo: "Calculado", regiao: "Brasília - DF", produtos: ["Claro Fixo", "Internet 300MB"], data_cadastro: "2018-11-05", endereco: "SQS 308, Bloco A - Brasília, DF" },
-  { id: 5, nome: "Carla Mendes", cpf: "654.321.987-00", telefone: "(31) 94321-0987", nps_score: 9, categoria: "Promotor", tipo: "Respondido", regiao: "Belo Horizonte - MG", produtos: ["Claro Móvel 80GB", "Internet 600MB"], data_cadastro: "2020-06-18", endereco: "Rua da Bahia, 1150 - Belo Horizonte, MG" },
-  { id: 6, nome: "Lucas Ferreira", cpf: "789.123.456-00", telefone: "(51) 93210-9876", nps_score: 3, categoria: "Detrator", tipo: "Calculado", regiao: "Porto Alegre - RS", produtos: ["Claro Móvel 10GB"], data_cadastro: "2022-02-28", endereco: "Av. Ipiranga, 1200 - Porto Alegre, RS" },
-  { id: 7, nome: "Juliana Almeida", cpf: "147.258.369-00", telefone: "(41) 92109-8765", nps_score: 10, categoria: "Promotor", tipo: "Calculado", regiao: "Curitiba - PR", produtos: ["Claro Móvel 50GB", "Claro TV", "Internet 1GB", "Claro Fixo"], data_cadastro: "2019-09-12", endereco: "Rua XV de Novembro, 500 - Curitiba, PR" },
-  { id: 8, nome: "Rafael Lima", cpf: "258.369.147-00", telefone: "(71) 91098-7654", nps_score: 8, categoria: "Neutro", tipo: "Respondido", regiao: "Salvador - BA", produtos: ["Claro Móvel 30GB", "Internet 200MB"], data_cadastro: "2021-04-20", endereco: "Rua Chile, 200 - Salvador, BA" },
-  { id: 9, nome: "Fernanda Rocha", cpf: "369.147.258-00", telefone: "(85) 90987-6543", nps_score: 9, categoria: "Promotor", tipo: "Respondido", regiao: "Fortaleza - CE", produtos: ["Claro Móvel 80GB", "Internet 500MB"], data_cadastro: "2020-08-30", endereco: "Av. Beira Mar, 3000 - Fortaleza, CE" },
-  { id: 10, nome: "Bruno Cardoso", cpf: "741.852.963-00", telefone: "(81) 89876-5432", nps_score: 5, categoria: "Detrator", tipo: "Calculado", regiao: "Recife - PE", produtos: ["Claro Móvel 15GB"], data_cadastro: "2022-01-14", endereco: "Rua da Aurora, 800 - Recife, PE" },
-  { id: 11, nome: "Patrícia Souza", cpf: "852.963.741-00", telefone: "(11) 88765-4321", nps_score: 7, categoria: "Neutro", tipo: "Calculado", regiao: "São Paulo - SP", produtos: ["Claro Móvel 30GB"], data_cadastro: "2021-07-08", endereco: "Av. Paulista, 1500 - São Paulo, SP" },
-  { id: 12, nome: "Diego Martins", cpf: "963.741.852-00", telefone: "(21) 87654-3210", nps_score: 10, categoria: "Promotor", tipo: "Respondido", regiao: "Rio de Janeiro - RJ", produtos: ["Claro Móvel 100GB", "Claro TV", "Internet 1GB"], data_cadastro: "2019-12-01", endereco: "Rua Visconde de Pirajá, 400 - Rio de Janeiro, RJ" },
-  { id: 13, nome: "Camila Ribeiro", cpf: "159.357.486-00", telefone: "(92) 86543-2109", nps_score: 2, categoria: "Detrator", tipo: "Respondido", regiao: "Manaus - AM", produtos: ["Claro Móvel 5GB"], data_cadastro: "2023-03-22", endereco: "Av. Eduardo Ribeiro, 600 - Manaus, AM" },
-  { id: 14, nome: "Thiago Barbosa", cpf: "357.486.159-00", telefone: "(61) 85432-1098", nps_score: 9, categoria: "Promotor", tipo: "Calculado", regiao: "Brasília - DF", produtos: ["Claro Móvel 80GB", "Internet 500MB", "Claro Fixo"], data_cadastro: "2020-05-15", endereco: "SQN 204, Bloco C - Brasília, DF" },
-  { id: 15, nome: "Amanda Torres", cpf: "486.159.357-00", telefone: "(31) 84321-0987", nps_score: 8, categoria: "Neutro", tipo: "Respondido", regiao: "Belo Horizonte - MG", produtos: ["Claro Móvel 50GB", "Internet 300MB"], data_cadastro: "2021-10-05", endereco: "Praça da Liberdade, 100 - Belo Horizonte, MG" },
-  { id: 16, nome: "Roberto Nascimento", cpf: "624.813.579-00", telefone: "(71) 83210-9876", nps_score: 10, categoria: "Promotor", tipo: "Calculado", regiao: "Salvador - BA", produtos: ["Claro Móvel 100GB", "Claro TV"], data_cadastro: "2018-08-20", endereco: "Av. Tancredo Neves, 900 - Salvador, BA" },
-  { id: 17, nome: "Isabela Gomes", cpf: "813.579.624-00", telefone: "(11) 82109-8765", nps_score: 6, categoria: "Detrator", tipo: "Calculado", regiao: "São Paulo - SP", produtos: ["Internet 200MB"], data_cadastro: "2022-06-10", endereco: "Rua da Consolação, 2200 - São Paulo, SP" },
-  { id: 18, nome: "Marcelo Pereira", cpf: "579.624.813-00", telefone: "(41) 81098-7654", nps_score: 9, categoria: "Promotor", tipo: "Respondido", regiao: "Curitiba - PR", produtos: ["Claro Móvel 50GB", "Claro TV", "Internet 600MB"], data_cadastro: "2020-11-25", endereco: "Rua Comendador Araújo, 300 - Curitiba, PR" },
-  { id: 19, nome: "Larissa Castro", cpf: "246.135.789-00", telefone: "(85) 80987-6543", nps_score: 7, categoria: "Neutro", tipo: "Calculado", regiao: "Fortaleza - CE", produtos: ["Claro Móvel 20GB", "Internet 100MB"], data_cadastro: "2021-09-18", endereco: "Rua Barão de Studart, 1500 - Fortaleza, CE" },
-  { id: 20, nome: "Felipe Duarte", cpf: "135.789.246-00", telefone: "(51) 79876-5432", nps_score: 10, categoria: "Promotor", tipo: "Respondido", regiao: "Porto Alegre - RS", produtos: ["Claro Móvel 80GB", "Internet 1GB", "Claro TV", "Claro Fixo"], data_cadastro: "2019-04-08", endereco: "Rua dos Andradas, 1000 - Porto Alegre, RS" },
+  { id: 1, nome: "Maria Silva", cpf: "123.456.789-00", telefone: "(11) 98765-4321", nps_score: 9, categoria: "Promotor", tipo: "Respondido", regiao: "São Paulo - SP", produtos: ["Claro Móvel 50GB", "Internet 500MB"], data_cadastro: "2025-12-15", endereco: "Rua Augusta, 1200 - São Paulo, SP" },
+  { id: 2, nome: "João Santos", cpf: "987.654.321-00", telefone: "(21) 97654-3210", nps_score: 4, categoria: "Detrator", tipo: "Calculado", regiao: "Rio de Janeiro - RJ", produtos: ["Claro Móvel 20GB"], data_cadastro: "2025-11-22", endereco: "Av. Atlântica, 500 - Rio de Janeiro, RJ" },
+  { id: 3, nome: "Ana Costa", cpf: "456.789.123-00", telefone: "(11) 96543-2109", nps_score: 10, categoria: "Promotor", tipo: "Respondido", regiao: "São Paulo - SP", produtos: ["Claro Móvel 100GB", "Claro TV", "Internet 1GB"], data_cadastro: "2026-01-10", endereco: "Rua Oscar Freire, 88 - São Paulo, SP" },
+  { id: 4, nome: "Pedro Oliveira", cpf: "321.654.987-00", telefone: "(61) 95432-1098", nps_score: 7, categoria: "Neutro", tipo: "Calculado", regiao: "Brasília - DF", produtos: ["Claro Fixo", "Internet 300MB"], data_cadastro: "2025-08-05", endereco: "SQS 308, Bloco A - Brasília, DF" },
+  { id: 5, nome: "Carla Mendes", cpf: "654.321.987-00", telefone: "(31) 94321-0987", nps_score: 9, categoria: "Promotor", tipo: "Respondido", regiao: "Belo Horizonte - MG", produtos: ["Claro Móvel 80GB", "Internet 600MB"], data_cadastro: "2026-02-01", endereco: "Rua da Bahia, 1150 - Belo Horizonte, MG" },
+  { id: 6, nome: "Lucas Ferreira", cpf: "789.123.456-00", telefone: "(51) 93210-9876", nps_score: 3, categoria: "Detrator", tipo: "Calculado", regiao: "Porto Alegre - RS", produtos: ["Claro Móvel 10GB"], data_cadastro: "2025-10-28", endereco: "Av. Ipiranga, 1200 - Porto Alegre, RS" },
+  { id: 7, nome: "Juliana Almeida", cpf: "147.258.369-00", telefone: "(41) 92109-8765", nps_score: 10, categoria: "Promotor", tipo: "Calculado", regiao: "Curitiba - PR", produtos: ["Claro Móvel 50GB", "Claro TV", "Internet 1GB", "Claro Fixo"], data_cadastro: "2025-09-12", endereco: "Rua XV de Novembro, 500 - Curitiba, PR" },
+  { id: 8, nome: "Rafael Lima", cpf: "258.369.147-00", telefone: "(71) 91098-7654", nps_score: 8, categoria: "Neutro", tipo: "Respondido", regiao: "Salvador - BA", produtos: ["Claro Móvel 30GB", "Internet 200MB"], data_cadastro: "2026-01-20", endereco: "Rua Chile, 200 - Salvador, BA" },
+  { id: 9, nome: "Fernanda Rocha", cpf: "369.147.258-00", telefone: "(85) 90987-6543", nps_score: 9, categoria: "Promotor", tipo: "Respondido", regiao: "Fortaleza - CE", produtos: ["Claro Móvel 80GB", "Internet 500MB"], data_cadastro: "2025-12-30", endereco: "Av. Beira Mar, 3000 - Fortaleza, CE" },
+  { id: 10, nome: "Bruno Cardoso", cpf: "741.852.963-00", telefone: "(81) 89876-5432", nps_score: 5, categoria: "Detrator", tipo: "Calculado", regiao: "Recife - PE", produtos: ["Claro Móvel 15GB"], data_cadastro: "2025-06-14", endereco: "Rua da Aurora, 800 - Recife, PE" },
+  { id: 11, nome: "Patrícia Souza", cpf: "852.963.741-00", telefone: "(11) 88765-4321", nps_score: 7, categoria: "Neutro", tipo: "Calculado", regiao: "São Paulo - SP", produtos: ["Claro Móvel 30GB"], data_cadastro: "2025-07-08", endereco: "Av. Paulista, 1500 - São Paulo, SP" },
+  { id: 12, nome: "Diego Martins", cpf: "963.741.852-00", telefone: "(21) 87654-3210", nps_score: 10, categoria: "Promotor", tipo: "Respondido", regiao: "Rio de Janeiro - RJ", produtos: ["Claro Móvel 100GB", "Claro TV", "Internet 1GB"], data_cadastro: "2025-11-01", endereco: "Rua Visconde de Pirajá, 400 - Rio de Janeiro, RJ" },
+  { id: 13, nome: "Camila Ribeiro", cpf: "159.357.486-00", telefone: "(92) 86543-2109", nps_score: 2, categoria: "Detrator", tipo: "Respondido", regiao: "Manaus - AM", produtos: ["Claro Móvel 5GB"], data_cadastro: "2025-04-22", endereco: "Av. Eduardo Ribeiro, 600 - Manaus, AM" },
+  { id: 14, nome: "Thiago Barbosa", cpf: "357.486.159-00", telefone: "(61) 85432-1098", nps_score: 9, categoria: "Promotor", tipo: "Calculado", regiao: "Brasília - DF", produtos: ["Claro Móvel 80GB", "Internet 500MB", "Claro Fixo"], data_cadastro: "2026-02-05", endereco: "SQN 204, Bloco C - Brasília, DF" },
+  { id: 15, nome: "Amanda Torres", cpf: "486.159.357-00", telefone: "(31) 84321-0987", nps_score: 8, categoria: "Neutro", tipo: "Respondido", regiao: "Belo Horizonte - MG", produtos: ["Claro Móvel 50GB", "Internet 300MB"], data_cadastro: "2025-10-05", endereco: "Praça da Liberdade, 100 - Belo Horizonte, MG" },
+  { id: 16, nome: "Roberto Nascimento", cpf: "624.813.579-00", telefone: "(71) 83210-9876", nps_score: 10, categoria: "Promotor", tipo: "Calculado", regiao: "Salvador - BA", produtos: ["Claro Móvel 100GB", "Claro TV"], data_cadastro: "2025-03-20", endereco: "Av. Tancredo Neves, 900 - Salvador, BA" },
+  { id: 17, nome: "Isabela Gomes", cpf: "813.579.624-00", telefone: "(11) 82109-8765", nps_score: 6, categoria: "Detrator", tipo: "Calculado", regiao: "São Paulo - SP", produtos: ["Internet 200MB"], data_cadastro: "2025-12-10", endereco: "Rua da Consolação, 2200 - São Paulo, SP" },
+  { id: 18, nome: "Marcelo Pereira", cpf: "579.624.813-00", telefone: "(41) 81098-7654", nps_score: 9, categoria: "Promotor", tipo: "Respondido", regiao: "Curitiba - PR", produtos: ["Claro Móvel 50GB", "Claro TV", "Internet 600MB"], data_cadastro: "2025-11-25", endereco: "Rua Comendador Araújo, 300 - Curitiba, PR" },
+  { id: 19, nome: "Larissa Castro", cpf: "246.135.789-00", telefone: "(85) 80987-6543", nps_score: 7, categoria: "Neutro", tipo: "Calculado", regiao: "Fortaleza - CE", produtos: ["Claro Móvel 20GB", "Internet 100MB"], data_cadastro: "2025-09-18", endereco: "Rua Barão de Studart, 1500 - Fortaleza, CE" },
+  { id: 20, nome: "Felipe Duarte", cpf: "135.789.246-00", telefone: "(51) 79876-5432", nps_score: 10, categoria: "Promotor", tipo: "Respondido", regiao: "Porto Alegre - RS", produtos: ["Claro Móvel 80GB", "Internet 1GB", "Claro TV", "Claro Fixo"], data_cadastro: "2026-01-08", endereco: "Rua dos Andradas, 1000 - Porto Alegre, RS" },
 ];
 
 export const regioes: RegionalData[] = [
@@ -103,4 +103,32 @@ export function getCategoriaColor(cat: "verde" | "amarelo" | "vermelho"): string
 
 export function maskCpf(cpf: string): string {
   return `***.***${cpf.slice(7)}`;
+}
+
+/** Returns the cutoff date for the given period key */
+export function getPeriodCutoffDate(periodo: string): Date {
+  const now = new Date();
+  switch (periodo) {
+    case "ultimo-mes":
+      return new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+    case "ultimos-3-meses":
+      return new Date(now.getFullYear(), now.getMonth() - 3, now.getDate());
+    case "ultimos-6-meses":
+      return new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
+    case "ultimo-ano":
+      return new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+    default:
+      return new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
+  }
+}
+
+/** Returns month count for a period key */
+export function getPeriodMonths(periodo: string): number {
+  switch (periodo) {
+    case "ultimo-mes": return 1;
+    case "ultimos-3-meses": return 3;
+    case "ultimos-6-meses": return 6;
+    case "ultimo-ano": return 12;
+    default: return 6;
+  }
 }
