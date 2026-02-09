@@ -1,6 +1,6 @@
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search } from "lucide-react";
+
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid,
   Tooltip, Legend, ResponsiveContainer,
@@ -62,10 +62,7 @@ export function NPSRespondidoCardContent({ metricas, onDrillDown }: CardContentP
   const { comparativo } = metricas;
   return (
     <div className="cursor-pointer" onClick={() => onDrillDown?.("comp_respondido", comparativo.nps_respondido)}>
-      <CardHeader className="pb-1 pt-4 relative">
-        <div className="absolute top-2 right-3 opacity-0 group-hover/drag:opacity-100 transition-opacity">
-          <Search className="h-3.5 w-3.5 text-muted-foreground" />
-        </div>
+      <CardHeader className="pb-1 pt-4">
         <CardTitle className="text-[12px] font-semibold text-foreground text-center">
           NPS Respondido
         </CardTitle>
@@ -85,10 +82,7 @@ export function NPSCalculadoCardContent({ metricas, onDrillDown }: CardContentPr
   const { comparativo } = metricas;
   return (
     <div className="cursor-pointer" onClick={() => onDrillDown?.("comp_calculado", comparativo.nps_calculado)}>
-      <CardHeader className="pb-1 pt-4 relative">
-        <div className="absolute top-2 right-3 opacity-0 group-hover/drag:opacity-100 transition-opacity">
-          <Search className="h-3.5 w-3.5 text-muted-foreground" />
-        </div>
+      <CardHeader className="pb-1 pt-4">
         <CardTitle className="text-[12px] font-semibold text-foreground text-center flex items-center justify-center gap-2">
           NPS Calculado (IA)
           <Badge variant="destructive" className="text-[8px] px-1.5 py-0 h-4 uppercase tracking-wider">
@@ -111,10 +105,7 @@ export function EvolucaoNPSCardContent({ metricas, onDrillDown }: CardContentPro
   const { comparativo } = metricas;
   return (
     <div className="cursor-pointer" onClick={() => onDrillDown?.("evolucao_nps", comparativo)}>
-      <CardHeader className="pb-2 pt-4 relative">
-        <div className="absolute top-2 right-3 opacity-0 group-hover/drag:opacity-100 transition-opacity">
-          <Search className="h-3.5 w-3.5 text-muted-foreground" />
-        </div>
+      <CardHeader className="pb-2 pt-4">
         <CardTitle className="text-[12px] font-semibold text-foreground">
           Evolução do NPS — Últimos 6 meses
         </CardTitle>

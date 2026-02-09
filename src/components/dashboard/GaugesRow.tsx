@@ -1,4 +1,4 @@
-import { SmilePlus, Search } from "lucide-react";
+import { SmilePlus } from "lucide-react";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ProdutoMetricas } from "@/data/produtosData";
 import type { DrillDownType } from "./DrillDownModal";
@@ -121,10 +121,7 @@ export function CSATCardContent({ metricas, onDrillDown }: CardContentProps) {
 
   return (
     <div className="cursor-pointer" onClick={() => onDrillDown?.("csat", metricas)}>
-      <CardHeader className="pb-1 pt-3 relative">
-        <div className="absolute top-2 right-3 opacity-0 group-hover/drag:opacity-100 transition-opacity">
-          <Search className="h-3.5 w-3.5 text-muted-foreground" />
-        </div>
+      <CardHeader className="pb-1 pt-3">
         <CardTitle className="text-[11px] text-muted-foreground font-medium text-center">
           Customer Satisfaction Score (CSAT)
         </CardTitle>
@@ -139,10 +136,7 @@ export function CSATCardContent({ metricas, onDrillDown }: CardContentProps) {
 export function NPSGaugeCardContent({ metricas, onDrillDown }: CardContentProps) {
   return (
     <div className="cursor-pointer" onClick={() => onDrillDown?.("nps_gauge", metricas)}>
-      <CardHeader className="pb-1 pt-3 relative">
-        <div className="absolute top-2 right-3 opacity-0 group-hover/drag:opacity-100 transition-opacity">
-          <Search className="h-3.5 w-3.5 text-muted-foreground" />
-        </div>
+      <CardHeader className="pb-1 pt-3">
         <CardTitle className="text-[11px] text-muted-foreground font-medium text-center">
           Net Promoter Score (NPS)
         </CardTitle>
@@ -157,10 +151,7 @@ export function NPSGaugeCardContent({ metricas, onDrillDown }: CardContentProps)
 export function CESCardContent({ metricas, onDrillDown }: CardContentProps) {
   return (
     <div className="cursor-pointer" onClick={() => onDrillDown?.("ces", metricas)}>
-      <CardHeader className="pb-1 pt-3 relative">
-        <div className="absolute top-2 right-3 opacity-0 group-hover/drag:opacity-100 transition-opacity">
-          <Search className="h-3.5 w-3.5 text-muted-foreground" />
-        </div>
+      <CardHeader className="pb-1 pt-3">
         <CardTitle className="text-[11px] text-muted-foreground font-medium text-center">
           Customer Effort Score (CES)
         </CardTitle>

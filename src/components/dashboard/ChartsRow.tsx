@@ -1,5 +1,5 @@
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search } from "lucide-react";
+
 import {
   AreaChart, Area, LineChart, Line, BarChart, Bar,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
@@ -15,10 +15,7 @@ interface CardContentProps {
 export function SatisfacaoCardContent({ metricas, onDrillDown }: CardContentProps) {
   return (
     <div className="cursor-pointer" onClick={() => onDrillDown?.("satisfacao_categoria", metricas)}>
-      <CardHeader className="pb-2 relative">
-        <div className="absolute top-2 right-3 opacity-0 group-hover/drag:opacity-100 transition-opacity">
-          <Search className="h-3.5 w-3.5 text-muted-foreground" />
-        </div>
+      <CardHeader className="pb-2">
         <CardTitle className="text-[11px] font-medium text-muted-foreground">
           Satisfação por Categoria
         </CardTitle>
@@ -46,10 +43,7 @@ export function SatisfacaoCardContent({ metricas, onDrillDown }: CardContentProp
 export function TempoMedioCardContent({ metricas, onDrillDown }: CardContentProps) {
   return (
     <div className="cursor-pointer" onClick={() => onDrillDown?.("tempo_medio", metricas)}>
-      <CardHeader className="pb-2 relative">
-        <div className="absolute top-2 right-3 opacity-0 group-hover/drag:opacity-100 transition-opacity">
-          <Search className="h-3.5 w-3.5 text-muted-foreground" />
-        </div>
+      <CardHeader className="pb-2">
         <CardTitle className="text-[11px] font-medium text-muted-foreground">
           Tempo Médio de Resposta - Mensal
         </CardTitle>
@@ -73,10 +67,7 @@ export function TempoMedioCardContent({ metricas, onDrillDown }: CardContentProp
 export function EvolucaoCSATCardContent({ metricas, onDrillDown }: CardContentProps) {
   return (
     <div className="cursor-pointer" onClick={() => onDrillDown?.("evolucao_csat", metricas)}>
-      <CardHeader className="pb-2 relative">
-        <div className="absolute top-2 right-3 opacity-0 group-hover/drag:opacity-100 transition-opacity">
-          <Search className="h-3.5 w-3.5 text-muted-foreground" />
-        </div>
+      <CardHeader className="pb-2">
         <CardTitle className="text-[11px] font-medium text-muted-foreground">
           Evolução CSAT - Últimos 6 meses
         </CardTitle>
