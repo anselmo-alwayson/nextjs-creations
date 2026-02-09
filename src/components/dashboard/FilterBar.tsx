@@ -59,10 +59,6 @@ export default function FilterBar({ filters, onFiltersChange }: FilterBarProps) 
 
   const activeFilters: { key: keyof Filters; label: string }[] = [];
   if (filters.estado) activeFilters.push({ key: "estado", label: `Estado: ${ESTADOS[filters.estado] ?? filters.estado}` });
-  if (filters.produto) {
-    const p = produtos.find((pr) => String(pr.id) === filters.produto);
-    activeFilters.push({ key: "produto", label: `Produto: ${p?.nome ?? filters.produto}` });
-  }
 
   const clearFilter = (key: keyof Filters) => {
     if (key === "regiao") update({ regiao: null, estado: null });
@@ -110,22 +106,6 @@ export default function FilterBar({ filters, onFiltersChange }: FilterBarProps) 
           </SelectContent>
         </Select>
 
-        {/* Produto */}
-        <Select
-          value={filters.produto ?? ""}
-          onValueChange={(v) => update({ produto: v || null })}
-        >
-          <SelectTrigger className="h-8 w-[140px] sm:w-[170px] text-xs">
-            <SelectValue placeholder="Produto" />
-          </SelectTrigger>
-          <SelectContent>
-            {produtos.map((p) => (
-              <SelectItem key={p.id} value={String(p.id)}>
-                {p.nome}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
       </div>
 
       {/* Active filters */}
