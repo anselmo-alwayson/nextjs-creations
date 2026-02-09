@@ -98,7 +98,7 @@ const MapaBrasil = ({ regioes, selectedCidade, onSelectCidade }: MapaBrasilProps
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px]">
         {/* Leaflet Map */}
-        <div className="relative h-[400px] md:h-[480px]">
+        <div className="relative h-[300px] sm:h-[400px] md:h-[480px]">
           <MapContainer
             center={[-14.5, -52]}
             zoom={4}
@@ -153,7 +153,7 @@ const MapaBrasil = ({ regioes, selectedCidade, onSelectCidade }: MapaBrasilProps
         </div>
 
         {/* Region list sidebar */}
-        <div className="border-t lg:border-t-0 lg:border-l border-border p-3 overflow-y-auto max-h-[400px] md:max-h-[480px]">
+        <div className="border-t lg:border-t-0 lg:border-l border-border p-3 overflow-y-auto max-h-[200px] sm:max-h-[400px] md:max-h-[480px]">
           <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Regiões</p>
           <div className="flex flex-row flex-wrap gap-1 lg:flex-col lg:flex-nowrap">
             <button

@@ -110,7 +110,7 @@ export default function Dashboard() {
 
   return (
     <main className="flex-1 overflow-auto bg-background">
-      <div className="mx-auto max-w-[1440px] space-y-4 p-4 md:p-5">
+      <div className="mx-auto max-w-[1440px] space-y-3 p-3 sm:space-y-4 sm:p-4 md:p-5">
         {/* Filters */}
         <FilterBar filters={filters} onFiltersChange={setFilters} />
 
@@ -118,8 +118,8 @@ export default function Dashboard() {
         <MetricsCards metricas={filteredMetricas} onDrillDown={handleDrillDown} />
 
         {/* Row 2: Products list + Map */}
-        <div className="flex gap-3 items-stretch">
-          <aside className="w-[180px] shrink-0">
+        <div className="flex flex-col gap-3 md:flex-row md:items-stretch">
+          <aside className="w-full md:w-[180px] md:shrink-0">
             <ProdutoList
               produtos={produtos}
               selectedId={selectedProdutoId}

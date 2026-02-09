@@ -156,7 +156,7 @@ const MetricsCards = ({ metricas, onDrillDown }: MetricsCardsProps) => {
                 onDrillDown(card.drillDownType, card.drillDownData);
               }
             }}
-            className={`animate-fade-in-up stagger-${i + 1} min-w-[270px] flex-shrink-0 rounded-xl border ${card.borderClass} ${card.bgClass} p-4 shadow-sm transition-shadow hover:shadow-md cursor-pointer group relative`}
+            className={`animate-fade-in-up stagger-${i + 1} min-w-[200px] sm:min-w-[270px] flex-shrink-0 rounded-xl border ${card.borderClass} ${card.bgClass} p-3 sm:p-4 shadow-sm transition-shadow hover:shadow-md cursor-pointer group relative`}
           >
             <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
               <Search className="h-3.5 w-3.5 text-muted-foreground" />

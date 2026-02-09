@@ -78,12 +78,12 @@ export default function FilterBar({ filters, onFiltersChange }: FilterBarProps) 
   return (
     <div className="space-y-2">
       {/* Filter selectors */}
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
         <Filter className="h-4 w-4 text-muted-foreground" />
 
         {/* Período */}
         <Select value={filters.periodo} onValueChange={(v) => update({ periodo: v })}>
-          <SelectTrigger className="h-8 w-[155px] text-xs">
+          <SelectTrigger className="h-8 w-[130px] sm:w-[155px] text-xs">
             <SelectValue placeholder="Período" />
           </SelectTrigger>
           <SelectContent>
@@ -100,7 +100,7 @@ export default function FilterBar({ filters, onFiltersChange }: FilterBarProps) 
           value={filters.regiao ?? ""}
           onValueChange={(v) => update({ regiao: v || null, estado: null })}
         >
-          <SelectTrigger className="h-8 w-[140px] text-xs">
+          <SelectTrigger className="h-8 w-[120px] sm:w-[140px] text-xs">
             <SelectValue placeholder="Região" />
           </SelectTrigger>
           <SelectContent>
@@ -117,7 +117,7 @@ export default function FilterBar({ filters, onFiltersChange }: FilterBarProps) 
           value={filters.estado ?? ""}
           onValueChange={(v) => update({ estado: v || null })}
         >
-          <SelectTrigger className="h-8 w-[155px] text-xs">
+          <SelectTrigger className="h-8 w-[130px] sm:w-[155px] text-xs">
             <SelectValue placeholder="Estado" />
           </SelectTrigger>
           <SelectContent>
@@ -134,7 +134,7 @@ export default function FilterBar({ filters, onFiltersChange }: FilterBarProps) 
           value={filters.produto ?? ""}
           onValueChange={(v) => update({ produto: v || null })}
         >
-          <SelectTrigger className="h-8 w-[170px] text-xs">
+          <SelectTrigger className="h-8 w-[140px] sm:w-[170px] text-xs">
             <SelectValue placeholder="Produto" />
           </SelectTrigger>
           <SelectContent>
